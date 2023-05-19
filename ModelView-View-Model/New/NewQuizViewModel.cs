@@ -11,17 +11,7 @@ namespace MVVM
         private EnterName _enterName;
         
         private Model _model;
-        public string QuizName
-        {
-            get
-            {
-                return _newQuiz.Name;
-            }
-            set
-            {
-                _newQuiz.Name = value;
-            }
-        }
+        
 
         public NewQuizViewModel(NewQuiz newQuiz)
         {
@@ -41,7 +31,6 @@ namespace MVVM
             _enterName.CancelCreateQuiz += _enterName_CancelCreateQuiz;
 
         }
-        
         
 
 
@@ -70,6 +59,19 @@ namespace MVVM
             DeleteQuestions();
         }
 
+        public void ContinueCreateQuiz()
+        {
+            NewQuiz newQuiz = new NewQuiz();
+            _newQuiz = newQuiz;
+
+            _newQuiz.Name = _enterName.Name;
+
+
+            var window = new NewQuiz();
+            window.ShowDialog();
+
+        }
+
         public void SaveQuiz()
         {
             string Name = _newQuiz.Name;
@@ -96,13 +98,7 @@ namespace MVVM
 
         }
 
-        public void ContinueCreateQuiz()
-        {
-            QuizName = _enterName.EnterNameTextBox.Text;
-            var window = new NewQuiz();
-            window.ShowDialog();
-            
-        }
+        
         public void CancelQuiz()
         {
             if(MainWindowModelView.enterNameWindow != null)
