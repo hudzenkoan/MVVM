@@ -27,7 +27,7 @@ namespace MVVM
         public event Action CancelCreateQuiz;
         public event Action ContinueCreateQuiz;
 
-        public string Name { get => EnterNameTextBox.Text; set => EnterNameTextBox.Text = value; }
+        public string Name { get =>  EnterNameTextBox.Text; set => EnterNameTextBox.Text = value; }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

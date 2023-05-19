@@ -26,7 +26,7 @@
         <RadioButton x:Name="SecondAnswerRadioButton" Content="" HorizontalAlignment="Left" Margin="305,223,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.64,0.48"/>
         <RadioButton x:Name="FirstAnswerRadioButton" Content="" HorizontalAlignment="Left" Margin="305,171,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.64,0.48"/>
         <Label Content="Name" HorizontalAlignment="Left" Margin="9,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <TextBox x:Name="NameTextBoxNewQuiz" HorizontalAlignment="Left" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" Height="27" IsReadOnly="True" Text="test"/>
+        <TextBox x:Name="NameTextBoxNewQuiz" HorizontalAlignment="Left" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" Height="27" IsReadOnly="True"/>
 
     </Grid>
 </Window>

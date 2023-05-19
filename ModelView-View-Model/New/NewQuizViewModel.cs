@@ -11,7 +11,6 @@ namespace MVVM
         private EnterName _enterName;
         
         private Model _model;
-        
 
         public NewQuizViewModel(NewQuiz newQuiz)
         {
@@ -59,16 +58,22 @@ namespace MVVM
             DeleteQuestions();
         }
 
+
+        
+
         public void ContinueCreateQuiz()
         {
-            NewQuiz newQuiz = new NewQuiz();
-            _newQuiz = newQuiz;
 
-            _newQuiz.Name = _enterName.Name;
+            NewQuiz newquiz = new NewQuiz();
+            newquiz.NameTextBoxNewQuiz.Text = _enterName.Name;
+            if (MainWindowModelView.enterNameWindow != null)
+            {
+                MainWindowModelView.enterNameWindow.Close();
+            }
 
+            newquiz.ShowDialog();
+           
 
-            var window = new NewQuiz();
-            window.ShowDialog();
 
         }
 
