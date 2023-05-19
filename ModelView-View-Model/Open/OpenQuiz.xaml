@@ -1,0 +1,19 @@
+﻿<Window x:Class="MVVM.OpenQuiz"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MVVM"
+        mc:Ignorable="d"
+        Title="OpenQuiz" Height="450" Width="800">
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+        <Label Content="Question" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="96" FontWeight="Bold" FontSize="20"/>
+        <Label x:Name="QuestionLabelOpenQuiz" Content="Pytanie" HorizontalAlignment="Center" Margin="0,52,0,0" VerticalAlignment="Top" FontSize="16" Width="505"/>
+        <RadioButton x:Name="FirstAnswerRadioButtonOpenQuiz" Content="1st Answer" HorizontalAlignment="Left" Margin="10,169,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="SecondAnswerRadioButtonOpenQuiz" Content="2nd Answer " HorizontalAlignment="Left" Margin="10,285,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="ThirdAnswerRadioButtonOpenQuiz" Content="3rd Answer" HorizontalAlignment="Left" Margin="646,169,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="FourthAnswerRadioButtonOpenQuiz" Content="4th Answer" HorizontalAlignment="Left" Margin="646,285,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="SubmitButtonOpenQuiz" Content="Submit" HorizontalAlignment="Left" Margin="10,352,0,0" VerticalAlignment="Top" Width="265" Height="36"/>
+        <Button x:Name="CheckButtonOpenQuiz" Content="Check" HorizontalAlignment="Left" Margin="505,352,0,0" VerticalAlignment="Top" Width="265" Height="36"/>
+    </Grid>
+</Window>

@@ -1,0 +1,45 @@
+﻿<Window x:Class="MVVM.EditQuestions"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MVVM"
+        mc:Ignorable="d"
+        Title="EditQuestions" Height="450" Width="800">
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Margin="0,0,0,-6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="155*"/>
+            <RowDefinition Height="159*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="26*"/>
+            <RowDefinition Height="30*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="528*"/>
+            <ColumnDefinition Width="65*"/>
+            <ColumnDefinition Width="73*"/>
+            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="64*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox HorizontalAlignment="Left" Height="420" Margin="310,10,0,0" VerticalAlignment="Top" Width="480" Grid.ColumnSpan="5" Grid.RowSpan="6"/>
+        <TextBox x:Name="QuestionTextBoxEditQuestions" HorizontalAlignment="Left" Margin="10,41,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="281" Height="32"/>
+        <Label Content="Question:&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="65" Height="26" FontWeight="Bold"/>
+        <TextBox x:Name="FirstAnswerTextBoxEditQuestions" HorizontalAlignment="Left" Margin="10,109,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="262" Height="32"/>
+        <TextBox x:Name="SecondAnswerTextBoxEditQuestions" HorizontalAlignment="Left" Margin="10,22,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="262" Height="32" Grid.Row="1"/>
+        <Label Content="1st Answer" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Width="78" Height="26" FontWeight="Bold"/>
+        <Label Content="2nd Answer" HorizontalAlignment="Left" Margin="10,146,0,0" VerticalAlignment="Top" Width="78" Height="26" FontWeight="Bold" Grid.RowSpan="2"/>
+        <Label Content="3rd Answer" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" Width="78" Height="26" FontWeight="Bold" RenderTransformOrigin="0.414,-1.217" Grid.Row="1"/>
+        <TextBox x:Name="ThirdAnswerTextBoxEditQuestions" HorizontalAlignment="Left" Margin="10,85,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="262" Height="32" Grid.Row="1"/>
+        <TextBox x:Name="FourthAnswerTextBoxEditQuestions" HorizontalAlignment="Left" Margin="10,148,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="262" Height="32" Grid.RowSpan="2" Grid.Row="1"/>
+        <Label Content="4th Answer" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Width="78" Height="26" FontWeight="Bold" Grid.Row="1"/>
+        <RadioButton Content="" HorizontalAlignment="Left" Margin="286,113,0,0" VerticalAlignment="Top"/>
+        <RadioButton Content="" HorizontalAlignment="Left" Margin="286,31,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <RadioButton Content="" HorizontalAlignment="Left" Margin="287,94,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <RadioButton Content="" HorizontalAlignment="Left" Margin="286,157,0,0" VerticalAlignment="Top" Grid.RowSpan="2" Grid.Row="1"/>
+        <Button x:Name="AddButtonEditQuestions" Content="Add" HorizontalAlignment="Left" Margin="10,0,0,1" VerticalAlignment="Bottom" Width="131" Height="32" Grid.Row="3"/>
+        <Button x:Name="DeleteButtonEditQuestions" Content="Delete" HorizontalAlignment="Left" Margin="160,0,0,0" VerticalAlignment="Center" Width="131" Height="32" Grid.Row="3"/>
+        <Button x:Name="SaveButtonEditQuestions" Content="Save" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Width="281" Height="32" Grid.Row="4" Grid.RowSpan="2"/>
+
+    </Grid>
+</Window>

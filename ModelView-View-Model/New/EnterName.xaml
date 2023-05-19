@@ -1,0 +1,25 @@
+﻿<Window x:Class="MVVM.EnterName"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MVVM"
+        mc:Ignorable="d"
+        Title="Creator" Height="128" Width="246" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+    <Grid Margin="0,0,204,190">
+        <TextBox x:Name="EnterNameTextBox" TextWrapping="Wrap" Margin="12,36,-195,-54" RenderTransformOrigin="0.5,0.5">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="180"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <Label Content="Enter Name of Quiz" Margin="8,11,-80,-37" FontSize="10"/>
+        <Button Content="OK" Height="25" Margin="12,59,-62,-84" Click="Button_Click"/>
+        <Button Content="Cancel" Height="25" Margin="146,59,-196,-84" Click="Button_Click_1"/>
+
+    </Grid>
+</Window>
