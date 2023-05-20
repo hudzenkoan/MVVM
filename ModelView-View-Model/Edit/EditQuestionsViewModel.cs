@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 
 
 namespace MVVM
@@ -36,8 +37,18 @@ namespace MVVM
         public void DeleteQuestions()
         {
 
-        }
 
+            if (_editQuestions.ListBoxIndex != -1)
+            {
+                int Index = _editQuestions.ListBoxIndex;
+                _editQuestions.ListBox_EditQuestions.Items.RemoveAt(Index);
+            }
+            else
+            {
+                MessageBox.Show("Nie ma elementów dla usuwania", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
         public void SaveQuiz()
         {
 

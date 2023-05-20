@@ -19,39 +19,50 @@ namespace MVVM
         public string NameQuiz { get; set; }
         
 
-        private static void ReadData(SQLiteConnection connection, string Path)
+        private static List<string> ReadData(SQLiteConnection connection, string Path)
         {
             SQLiteDataReader reader;
             SQLiteCommand command;
 
             command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM Quiz";
+            command.CommandText = $"SELECT * FROM {Path}";
             reader = command.ExecuteReader();
 
-            while (reader.Read()) {
-                string Name = (string)reader["NameQuiz"];
-                string Que = (string)reader["Question"];
-                string First = (string)reader["FirstAnswer"];
-                string Second = (string)reader["SecondAnswer"];
-                string Third = (string)reader["ThirdAnswer"];
-                string Fourth = (string)reader["FourthAnswer"];
-                string Correctly = (string)reader["CorrectlyAnswer"];
+            List<string> data = new List<string>();
+
+            while (reader.Read())
+            {
+                string question = (string)reader["Question"];
+                string firstAnswer = (string)reader["FirstAnswer"];
+                string secondAnswer = (string)reader["SecondAnswer"];
+                string thirdAnswer = (string)reader["ThirdAnswer"];
+                string fourthAnswer = (string)reader["FourthAnswer"];
+                string correctlyAnswer = (string)reader["CorrectlyAnswer"];
+
+                // Tworzenie łańcucha znaków z danymi oddzielonymi przecinkami
+                string rowData = string.Join(", ", question, firstAnswer, secondAnswer, thirdAnswer, fourthAnswer, correctlyAnswer);
+
+                // Dodawanie łańcucha znaków do listy danych
+                data.Add(rowData);
             }
+
+            return data;
         }
 
-        public static void ReadData(string path)
+        public static List<string> ReadData(string path, string FileName)
         {
-            SQLiteConnection connection = new SQLiteConnection($"{path};Version=3;");
-            try
-            {
-                connection.Open();
-                ReadData(connection, path);
-                connection.Close();
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            SQLiteConnection connection = new SQLiteConnection($"Data Source={path};Version=3;");
+            connection.Open();
+            List<string> result = ReadData(connection, FileName);
+            connection.Close();
+            return result;
+            //catch(Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //    return new List<string>();
+            //}
+
+
         }
 
         private static void InsertData(SQLiteConnection connection, string Name, string Question, string FirstAnswer, string SecondAnswer, string ThirdAnswer, string FourthAnswer, string CorrectlyAnswer)
@@ -139,20 +150,18 @@ namespace MVVM
             }
         }
         
-
-
-
-        //zdarzenia
-        event Action NewQuiz;
-        event Action EditQuiz;
-        event Action OpenQuiz;
-
-       //metody
-
-        public void NowyQuiz()
+        private void DropTable(SQLiteConnection connection, string TableName)
         {
 
         }
+
+        public void DropTable(string TableName)
+        {
+
+        }
+
+
+       
         
 
 

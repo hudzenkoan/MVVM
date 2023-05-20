@@ -146,6 +146,10 @@ namespace MVVM
                 int Index = _newQuiz.ListBoxIndex;
                 _newQuiz.ListBoxNewQuiz.Items.RemoveAt(Index);
             }
+            else
+            {
+                MessageBox.Show("Nie ma elementów dla usuwania", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             // else
             // Показывает ошибку, что нет элементов в списке для удаления
         }

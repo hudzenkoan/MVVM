@@ -51,6 +51,31 @@ namespace MVVM
             var window = new OpenQuiz();
             window.ShowDialog();
         }
+
+
+        private void AddDataToListBox(EditQuestions window, List<string> data)
+        {
+            foreach (string rowData in data)
+            {
+                // Podział danych w łańcuchu znaków na poszczególne elementy
+                string[] rowDataParts = rowData.Split(',');
+
+                // Tworzenie sformatowanego łańcucha znaków w oczekiwanym formacie
+                string formattedData = string.Format("Question: {0}, FirstAnswer: {1}, SecondAnswer: {2}, ThirdAnswer: {3}, FourthAnswer: {4}, CorrectlyAnswer: {5}",
+                    rowDataParts[0].Trim(),
+                    rowDataParts[1].Trim(),
+                    rowDataParts[2].Trim(),
+                    rowDataParts[3].Trim(),
+                    rowDataParts[4].Trim(),
+                    rowDataParts[5].Trim());
+
+                //EditQuestions window = new EditQuestions();
+                window.ListBox_EditQuestions.Items.Add(formattedData);
+                // Dodawanie sformatowanego łańcucha znaków do ListBox
+                //listBox.Items.Add(formattedData);
+            }
+        }
+
         public void EditQuiz()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -66,8 +91,17 @@ namespace MVVM
                 string selectedFilePath = openFileDialog.FileName;
                 string SelectedFileName = Path.GetFileNameWithoutExtension(selectedFilePath);
                 window.Name_Quiz = SelectedFileName;
-                
+
+                List<string> data = Model.ReadData(selectedFilePath, SelectedFileName);
+
+                AddDataToListBox(window, data);
+
                 window.ShowDialog();
+
+
+                
+                //string DaneDoListBox = string.Join($", ", Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer);
+                //string formattedString = string.Format("Question: {0}, FirstAnswer: {1}, SecondAnswer: {2}, ThirdAnswer: {3}, FourthAnswer: {4}, CorrectlyAnswer: {5}", Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer);
 
                 // Считывание данных из базы данных
             }

@@ -33,6 +33,7 @@ namespace MVVM
         public string ThirdAnswer { get => ThirdAnswerTextBoxEditQuestions.Text; }
         public string FourthAnswer { get => FourthAnswerTextBoxEditQuestions.Text; }
         public string CorrectlyAnswer { get => GetSelectedRadioButtonText(); }
+        public int ListBoxIndex { get => ListBox_EditQuestions.SelectedIndex; }
 
 
         public event Action SaveQuiz;
