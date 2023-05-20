@@ -106,15 +106,15 @@ namespace MVVM
             connection.Close();
         }
 
-        public static void CreateDataBase(List<string> Odpowiedz, string Name, int count)
+        public static void CreateDataBase(List<string> Odpowiedz, string Name, int count, string path)
         {
-            string path_for_base = $"C:/Users/hudze/source/repos/MVVM/ModelView-View-Model/";
-            string Path_for_CreateDataBase = $"C:/Users/hudze/source/repos/MVVM/ModelView-View-Model/{Name}.db";
-            string path = $"Data Source={path_for_base}{Name}.db";
-            SQLiteConnection connection = new SQLiteConnection($"{path};Version=3;");
+            //string path_for_base = $"C:/Users/hudze/source/repos/MVVM/ModelView-View-Model/";
+            //string Path_for_CreateDataBase = $"C:/Users/hudze/source/repos/MVVM/ModelView-View-Model/{Name}.db";
+            string Path = $"Data Source={path}";
+            SQLiteConnection connection = new SQLiteConnection($"{Path};Version=3;");
             
             connection.Open();
-            CreateDataBase(connection, Path_for_CreateDataBase, Name, Odpowiedz, count);
+            CreateDataBase(connection, path, Name, Odpowiedz, count);
             connection.Close();
          
             
@@ -150,14 +150,23 @@ namespace MVVM
             }
         }
         
-        private void DropTable(SQLiteConnection connection, string TableName)
+        private static void DropTable(SQLiteConnection connection, List<string> Odpowiedz, string Name, int count, string path)
         {
+            SQLiteCommand command = connection.CreateCommand();
+            command.CommandText = $"DROP TABLE {Name}";
+            command.ExecuteNonQuery();
+            CreateDataBase(connection, path, Name, Odpowiedz, count);
+
 
         }
 
-        public void DropTable(string TableName)
+        public static void DropTable(List<string> Odpowiedz, string Name, int count, string path)
         {
+            SQLiteConnection connection = new SQLiteConnection($"Data Source={path};Version=3;");
 
+            connection.Open();
+            DropTable(connection, Odpowiedz, Name, count, path);
+            connection.Close();
         }
 
 

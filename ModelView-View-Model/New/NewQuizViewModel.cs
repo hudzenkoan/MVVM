@@ -108,7 +108,7 @@ namespace MVVM
                     pytania.Add(cleanedText);
                 }
                 String Name = _newQuiz.NameTextBoxNewQuiz.Text;
-                Model.CreateDataBase(pytania, Name, count);
+                //Model.CreateDataBase(pytania, Name, count); ИСПРАВИТЬ!!!!!!!!!!!!!
                 MessageBox.Show("Quiz został utworzony!", "Powiodło się!", MessageBoxButton.OK, MessageBoxImage.Information);
                 _newQuiz.Close();
             }
