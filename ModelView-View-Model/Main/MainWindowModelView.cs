@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Win32;
+using System.IO;
 
 namespace MVVM
 {
     public class MainWindowModelView
     {
+        private EditQuestions _editQuestions;
         private MainWindow _mainwindow;
         
         public MainWindowModelView(MainWindow mainWindow)
@@ -50,8 +53,26 @@ namespace MVVM
         }
         public void EditQuiz()
         {
-            var window = new EditQuestions();
-            window.ShowDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Bazy danych (*.db)|*.db|Wszystkie pliki (*.*)|*.*";
+            openFileDialog.InitialDirectory = @"C:\";
+            openFileDialog.Title = "Wybierz plik bazy danych";
+
+            bool? result = openFileDialog.ShowDialog();
+
+            if (result == true)
+            {
+                EditQuestions window = new EditQuestions();
+                string selectedFilePath = openFileDialog.FileName;
+                string SelectedFileName = Path.GetFileNameWithoutExtension(selectedFilePath);
+                window.Name_Quiz = SelectedFileName;
+                
+                window.ShowDialog();
+
+                // Считывание данных из базы данных
+            }
+
+
         }
 
 

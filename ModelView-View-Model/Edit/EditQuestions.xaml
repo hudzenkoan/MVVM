@@ -22,24 +22,26 @@
             <ColumnDefinition Width="70*"/>
             <ColumnDefinition Width="64*"/>
         </Grid.ColumnDefinitions>
-        <ListBox HorizontalAlignment="Left" Height="420" Margin="310,10,0,0" VerticalAlignment="Top" Width="480" Grid.ColumnSpan="5" Grid.RowSpan="6"/>
-        <TextBox x:Name="QuestionTextBoxEditQuestions" HorizontalAlignment="Left" Margin="10,41,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="281" Height="32"/>
-        <Label Content="Question:&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="65" Height="26" FontWeight="Bold"/>
-        <TextBox x:Name="FirstAnswerTextBoxEditQuestions" HorizontalAlignment="Left" Margin="10,109,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="262" Height="32"/>
-        <TextBox x:Name="SecondAnswerTextBoxEditQuestions" HorizontalAlignment="Left" Margin="10,22,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="262" Height="32" Grid.Row="1"/>
-        <Label Content="1st Answer" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Width="78" Height="26" FontWeight="Bold"/>
-        <Label Content="2nd Answer" HorizontalAlignment="Left" Margin="10,146,0,0" VerticalAlignment="Top" Width="78" Height="26" FontWeight="Bold" Grid.RowSpan="2"/>
-        <Label Content="3rd Answer" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" Width="78" Height="26" FontWeight="Bold" RenderTransformOrigin="0.414,-1.217" Grid.Row="1"/>
-        <TextBox x:Name="ThirdAnswerTextBoxEditQuestions" HorizontalAlignment="Left" Margin="10,85,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="262" Height="32" Grid.Row="1"/>
+        <ListBox x:Name="ListBox_EditQuestions" HorizontalAlignment="Left" Height="420" Margin="310,10,0,0" VerticalAlignment="Top" Width="480" Grid.ColumnSpan="5" Grid.RowSpan="6"/>
+        <TextBox x:Name="QuestionTextBoxEditQuestions" HorizontalAlignment="Left" Margin="10,91,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="262" Height="32"/>
+        <Label Content="Question:&#xD;&#xA;" HorizontalAlignment="Left" Margin="11,62,0,0" VerticalAlignment="Top" Width="65" Height="26" FontWeight="Bold"/>
+        <TextBox x:Name="FirstAnswerTextBoxEditQuestions" HorizontalAlignment="Left" Margin="11,147,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="262" Height="32" Grid.RowSpan="2"/>
+        <TextBox x:Name="SecondAnswerTextBoxEditQuestions" HorizontalAlignment="Left" Margin="10,46,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="262" Height="32" Grid.Row="1"/>
+        <Label Content="1st Answer" HorizontalAlignment="Left" Margin="12,118,0,0" VerticalAlignment="Top" Width="78" Height="26" FontWeight="Bold"/>
+        <Label Content="2nd Answer" HorizontalAlignment="Left" Margin="11,19,0,0" VerticalAlignment="Top" Width="78" Height="26" FontWeight="Bold" Grid.Row="1"/>
+        <Label Content="3rd Answer" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" Width="78" Height="26" FontWeight="Bold" RenderTransformOrigin="0.414,-1.217" Grid.Row="1"/>
+        <TextBox x:Name="ThirdAnswerTextBoxEditQuestions" HorizontalAlignment="Left" Margin="10,99,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="262" Height="32" Grid.Row="1"/>
         <TextBox x:Name="FourthAnswerTextBoxEditQuestions" HorizontalAlignment="Left" Margin="10,148,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="262" Height="32" Grid.RowSpan="2" Grid.Row="1"/>
-        <Label Content="4th Answer" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Width="78" Height="26" FontWeight="Bold" Grid.Row="1"/>
-        <RadioButton Content="" HorizontalAlignment="Left" Margin="286,113,0,0" VerticalAlignment="Top"/>
-        <RadioButton Content="" HorizontalAlignment="Left" Margin="286,31,0,0" VerticalAlignment="Top" Grid.Row="1"/>
-        <RadioButton Content="" HorizontalAlignment="Left" Margin="287,94,0,0" VerticalAlignment="Top" Grid.Row="1"/>
-        <RadioButton Content="" HorizontalAlignment="Left" Margin="286,157,0,0" VerticalAlignment="Top" Grid.RowSpan="2" Grid.Row="1"/>
-        <Button x:Name="AddButtonEditQuestions" Content="Add" HorizontalAlignment="Left" Margin="10,0,0,1" VerticalAlignment="Bottom" Width="131" Height="32" Grid.Row="3"/>
-        <Button x:Name="DeleteButtonEditQuestions" Content="Delete" HorizontalAlignment="Left" Margin="160,0,0,0" VerticalAlignment="Center" Width="131" Height="32" Grid.Row="3"/>
-        <Button x:Name="SaveButtonEditQuestions" Content="Save" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Width="281" Height="32" Grid.Row="4" Grid.RowSpan="2"/>
+        <Label Content="4th Answer" HorizontalAlignment="Left" Margin="11,126,0,0" VerticalAlignment="Top" Width="78" Height="26" FontWeight="Bold" Grid.Row="1"/>
+        <RadioButton x:Name="FirstRadioButtonEdtiQuestions" Content="" HorizontalAlignment="Left" Margin="284,154,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,2.85" Grid.RowSpan="2"/>
+        <RadioButton x:Name="SecondRadioButtonEdtiQuestions" Content="" HorizontalAlignment="Left" Margin="286,53,0,0" VerticalAlignment="Top" Grid.Row="1" RenderTransformOrigin="0.484,1.873"/>
+        <RadioButton x:Name="ThirdRadioButtonEdtiQuestions" Content="" HorizontalAlignment="Left" Margin="287,109,0,35" Grid.Row="1"/>
+        <RadioButton x:Name="FourthRadioButtonEdtiQuestions" Content="" HorizontalAlignment="Left" Margin="286,157,0,0" VerticalAlignment="Top" Grid.RowSpan="2" Grid.Row="1"/>
+        <Button x:Name="AddButtonEditQuestions" Content="Add" HorizontalAlignment="Left" Margin="10,0,0,1" VerticalAlignment="Bottom" Width="131" Height="32" Grid.Row="3" Click="AddButtonEditQuestions_Click"/>
+        <Button x:Name="DeleteButtonEditQuestions" Content="Delete" HorizontalAlignment="Left" Margin="160,0,0,0" VerticalAlignment="Center" Width="131" Height="32" Grid.Row="3" Click="DeleteButtonEditQuestions_Click"/>
+        <Button x:Name="SaveButtonEditQuestions" Content="Save" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Width="281" Height="32" Grid.Row="4" Grid.RowSpan="2" Click="SaveButtonEditQuestions_Click"/>
+        <TextBox x:Name="NameTextBoxEditQuestions" HorizontalAlignment="Left" Margin="12,37,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="262" Height="32"/>
+        <Label Content="Name:&#xA;" HorizontalAlignment="Left" Margin="13,7,0,0" VerticalAlignment="Top" Width="65" Height="26" FontWeight="Bold"/>
 
     </Grid>
 </Window>

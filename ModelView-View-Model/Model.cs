@@ -19,7 +19,7 @@ namespace MVVM
         public string NameQuiz { get; set; }
         
 
-        private static void ReadData(SQLiteConnection connection)
+        private static void ReadData(SQLiteConnection connection, string Path)
         {
             SQLiteDataReader reader;
             SQLiteCommand command;
@@ -39,13 +39,13 @@ namespace MVVM
             }
         }
 
-        public static void ReadData()
+        public static void ReadData(string path)
         {
             SQLiteConnection connection = new SQLiteConnection($"{path};Version=3;");
             try
             {
                 connection.Open();
-                ReadData(connection);
+                ReadData(connection, path);
                 connection.Close();
             }
             catch(Exception ex)
