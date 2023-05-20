@@ -70,21 +70,32 @@ namespace MVVM
         }
 
 
-        private static void CreateDataBase(SQLiteConnection connection, string Path, string Name, string Question, string FirstAnswer, string SecondAnswer, string ThirdAnswer, string FourthAnswer, string CorrectlyAnswer)
+        private static void CreateDataBase(SQLiteConnection connection, string Path, string Name, List<string> data, int count)
         {
-            
-            string createTableQuery = $"CREATE TABLE IF NOT EXISTS {Name} (Question TEXT NOT NULL, FirstAnswer TEXT NOT NULL, SecondAnswer TEXT NOT NULL, ThirdAnswer TEXT NOT NULL, FourthAnswer TEXT NOT NULL, CorrectlyAnswer TEXT NOT NULL)";
-            using (SQLiteCommand createTableCommand = new SQLiteCommand(createTableQuery, connection))
-            {
-                createTableCommand.ExecuteNonQuery();
+
+            for (int i = 0; i < count; i++) {
+                string[] Base = data[i].Split(',');
+                string question = Base[0];
+                string firstanswer = Base[1];
+                string secondanswer = Base[2];
+                string thirdanswer = Base[3];
+                string fourthanswer = Base[4];
+                string correctlyanswer = Base[5];
+                string name = Name;
+
+                string createTableQuery = $"CREATE TABLE IF NOT EXISTS {Name} (Question TEXT NOT NULL, FirstAnswer TEXT NOT NULL, SecondAnswer TEXT NOT NULL, ThirdAnswer TEXT NOT NULL, FourthAnswer TEXT NOT NULL, CorrectlyAnswer TEXT NOT NULL)";
+                using (SQLiteCommand createTableCommand = new SQLiteCommand(createTableQuery, connection))
+                {
+                    createTableCommand.ExecuteNonQuery();
+                }
+
+                InsertData(connection, name, question, firstanswer, secondanswer, thirdanswer, fourthanswer, correctlyanswer);
+                
             }
-
-            InsertData(connection, Name, Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer);
             connection.Close();
-
         }
 
-        public static void CreateDataBase(string Name, string Question, string FirstAnswer, string SecondAnswer, string ThirdAnswer, string FourthAnswer, string CorrectlyAnswer)
+        public static void CreateDataBase(List<string> Odpowiedz, string Name, int count)
         {
             string path_for_base = $"C:/Users/hudze/source/repos/MVVM/ModelView-View-Model/";
             string Path_for_CreateDataBase = $"C:/Users/hudze/source/repos/MVVM/ModelView-View-Model/{Name}.db";
@@ -92,7 +103,7 @@ namespace MVVM
             SQLiteConnection connection = new SQLiteConnection($"{path};Version=3;");
             
             connection.Open();
-            CreateDataBase(connection, Path_for_CreateDataBase, Name, Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer);
+            CreateDataBase(connection, Path_for_CreateDataBase, Name, Odpowiedz, count);
             connection.Close();
          
             

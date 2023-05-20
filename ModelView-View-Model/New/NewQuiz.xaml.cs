@@ -40,6 +40,7 @@ namespace MVVM
         public string ThirdAnswer { get => ThirdAnswerTextBoxNewQuiz.Text; }
         public string FourthAnswer { get => FourthAnswerTextBoxNewQuiz.Text; }
         public string CorrectlyAnswer { get => GetSelectedRadioButtonText(); }
+        public int ListBoxIndex { get => ListBoxNewQuiz.SelectedIndex; }
 
         private void AddButtonNewQuiz_Click(object sender, RoutedEventArgs e)
         {
