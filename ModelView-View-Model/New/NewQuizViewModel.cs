@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows;
 
@@ -80,47 +82,88 @@ namespace MVVM
         public void SaveQuiz()
         {
 
-            //string Name = _newQuiz.Name;
-            //string Question = _newQuiz.Question;
-            //string FirstAnswer = _newQuiz.FirstAnswer;
-            //string SecondAnswer = _newQuiz.SecondAnswer;
-            //string ThirdAnswer = _newQuiz.ThirdAnswer;
-            //string FourthAnswer = _newQuiz.FourthAnswer;
-            //string CorrectlyAnswer = _newQuiz.CorrectlyAnswer;
-            int count = _newQuiz.ListBoxNewQuiz.Items.Count;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Data Base (*.db)|*.db|All Files (*.*)|*.*";
+            saveFileDialog.InitialDirectory = @"C:\";
+            saveFileDialog.Title = "Save File";
+            saveFileDialog.FileName = _newQuiz.NameTextBoxNewQuiz.Text;
 
-            List<string> pytania = new List<string>();
-            
+            bool? result = saveFileDialog.ShowDialog();
 
-            if (count != 0)
+            if (result == true)
             {
-                for(int i = 0; i < count; i++)
+                string selectedFilePath = saveFileDialog.FileName;
+                string SelectedFileName = Path.GetFileNameWithoutExtension(selectedFilePath);
+                int count = _newQuiz.ListBoxNewQuiz.Items.Count;
+
+                List<string> pytania = new List<string>();
+                if (count != 0)
                 {
-                    string formatteddata = _newQuiz.ListBoxNewQuiz.Items[i].ToString();
-                    string cleanedText = formatteddata.Replace("Question: ", "")
-                        .Replace("FirstAnswer: ", "")
-                        .Replace("SecondAnswer: ", "")
-                        .Replace("ThirdAnswer: ", "")
-                        .Replace("FourthAnswer: ", "")
-                        .Replace("CorrectlyAnswer: ", "");
+                    for (int i = 0; i < count; i++)
+                    {
+                        string formatteddata = _newQuiz.ListBoxNewQuiz.Items[i].ToString();
+                        string cleanedText = formatteddata.Replace("Question: ", "")
+                            .Replace("FirstAnswer: ", "")
+                            .Replace("SecondAnswer: ", "")
+                            .Replace("ThirdAnswer: ", "")
+                            .Replace("FourthAnswer: ", "")
+                            .Replace("CorrectlyAnswer: ", "");
 
+                        pytania.Add(cleanedText);
+                    }
 
-                    pytania.Add(cleanedText);
+                    
+
+                    // Удаляем существующий файл, если он существует
+                    if (File.Exists(selectedFilePath))
+                    {
+                        File.Delete(selectedFilePath);
+                    }
+
+                    // Создаем новый файл базы данных
+                    Model.CreateDataBase(pytania, SelectedFileName, count, selectedFilePath);
+
+                    MessageBox.Show("Quiz został utworzony!", "Powiodło się!", MessageBoxButton.OK, MessageBoxImage.Information);
+                    _newQuiz.Close();
                 }
-                String Name = _newQuiz.NameTextBoxNewQuiz.Text;
-                //Model.CreateDataBase(pytania, Name, count); ИСПРАВИТЬ!!!!!!!!!!!!!
-                MessageBox.Show("Quiz został utworzony!", "Powiodło się!", MessageBoxButton.OK, MessageBoxImage.Information);
-                _newQuiz.Close();
+                else
+                {
+                    MessageBox.Show("Dla zapisania musi być przynajmniej jeden element!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                //int count = _newQuiz.ListBoxNewQuiz.Items.Count;
+
+                //List<string> pytania = new List<string>();
+
+
+                //if (count != 0)
+                //{
+                //    for(int i = 0; i < count; i++)
+                //    {
+                //        string formatteddata = _newQuiz.ListBoxNewQuiz.Items[i].ToString();
+                //        string cleanedText = formatteddata.Replace("Question: ", "")
+                //            .Replace("FirstAnswer: ", "")
+                //            .Replace("SecondAnswer: ", "")
+                //            .Replace("ThirdAnswer: ", "")
+                //            .Replace("FourthAnswer: ", "")
+                //            .Replace("CorrectlyAnswer: ", "");
+
+
+                //        pytania.Add(cleanedText);
+                //    }
+                //    String Name = _newQuiz.NameTextBoxNewQuiz.Text;
+                //    //Model.CreateDataBase(pytania, Name, count); ИСПРАВИТЬ!!!!!!!!!!!!!
+                //    MessageBox.Show("Quiz został utworzony!", "Powiodło się!", MessageBoxButton.OK, MessageBoxImage.Information);
+                //    _newQuiz.Close();
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Dla zapisania musi być przynajmniej jeden element!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                //}
+                // Выводит ошибку, что нет элементов 
+
+
             }
-            else
-            {
-                MessageBox.Show("Dla zapisania musi być przynajmniej jeden element!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            // Выводит ошибку, что нет элементов 
-
-
-
-            //Model.CreateDataBase(Name, Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer);
+                //Model.CreateDataBase(Name, Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer);
         }
 
         public void AddQuestions()

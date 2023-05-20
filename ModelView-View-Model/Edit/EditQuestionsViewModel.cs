@@ -43,6 +43,7 @@ namespace MVVM
             {
                 int Index = _editQuestions.ListBoxIndex;
                 _editQuestions.ListBox_EditQuestions.Items.RemoveAt(Index);
+                _editQuestions.ListBox_EditQuestions.SelectedIndex = _editQuestions.ListBox_EditQuestions.Items.Count - 1;
             }
             else
             {
@@ -56,6 +57,7 @@ namespace MVVM
             saveFileDialog.Filter = "Data Base (*.db)|*.db|All Files (*.*)|*.*";
             saveFileDialog.InitialDirectory = @"C:\";
             saveFileDialog.Title = "Save File";
+            saveFileDialog.FileName = _editQuestions.NameTextBoxEditQuestions.Text;
 
             bool? result = saveFileDialog.ShowDialog();
 
@@ -78,11 +80,20 @@ namespace MVVM
                             .Replace("FourthAnswer: ", "")
                             .Replace("CorrectlyAnswer: ", "");
 
-
                         pytania.Add(cleanedText);
                     }
-                    string Name = _editQuestions.NameTextBoxEditQuestions.Text;
-                    Model.CreateDataBase(pytania, Name, count, selectedFilePath);
+
+                    
+
+                    // Удаляем существующий файл, если он существует
+                    if (File.Exists(selectedFilePath))
+                    {
+                        File.Delete(selectedFilePath);
+                    }
+
+                    // Создаем новый файл базы данных
+                    Model.CreateDataBase(pytania, SelectedFileName, count, selectedFilePath);
+
                     MessageBox.Show("Quiz został utworzony!", "Powiodło się!", MessageBoxButton.OK, MessageBoxImage.Information);
                     _editQuestions.Close();
                 }
@@ -90,20 +101,20 @@ namespace MVVM
                 {
                     MessageBox.Show("Dla zapisania musi być przynajmniej jeden element!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                //Model.DropTable(SelectedFileName, selectedFilePath);
             }
 
 
-            
-
-
-            
 
 
 
 
 
-            
+
+
+
+
+
+
 
             //if (result == true)
             //{
@@ -124,6 +135,8 @@ namespace MVVM
             string DaneDoListBox = string.Join($", ", Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer);
             string formattedString = string.Format("Question: {0}, FirstAnswer: {1}, SecondAnswer: {2}, ThirdAnswer: {3}, FourthAnswer: {4}, CorrectlyAnswer: {5}", Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer);
             _editQuestions.ListBox_EditQuestions.Items.Add(formattedString);
+
+
         }
     }
 }
