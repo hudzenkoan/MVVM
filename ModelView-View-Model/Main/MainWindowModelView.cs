@@ -9,8 +9,10 @@ namespace MVVM
     public class MainWindowModelView
     {
         private EditQuestions _editQuestions;
+        private OpenQuiz _openQuiz;
         private MainWindow _mainwindow;
-        
+
+
         public MainWindowModelView(MainWindow mainWindow)
         {
             _mainwindow = mainWindow;
@@ -19,6 +21,8 @@ namespace MVVM
             _mainwindow.OpenQuiz += _mainwindow_OpenQuiz;
             _mainwindow.EditQuiz += _mainwindow_EditQuiz;
         }
+
+        
 
         public static EnterName enterNameWindow { get; private set; }
 
@@ -48,9 +52,26 @@ namespace MVVM
 
         public void OpenQuiz()
         {
-            var window = new OpenQuiz();
-            window.ShowDialog();
+
+            OpenQuizViewModel viewModel = new OpenQuizViewModel();
+            viewModel.Open();
+
+
         }
+
+
+
+            //OpenQuiz window = new OpenQuiz();
+
+
+
+
+
+
+
+
+            //window.ShowDialog();
+
 
 
         private void AddDataToListBox(EditQuestions window, List<string> data)
@@ -71,6 +92,8 @@ namespace MVVM
 
                 //EditQuestions window = new EditQuestions();
                 window.ListBox_EditQuestions.Items.Add(formattedData);
+
+
                 // Dodawanie sformatowanego łańcucha znaków do ListBox
                 //listBox.Items.Add(formattedData);
             }

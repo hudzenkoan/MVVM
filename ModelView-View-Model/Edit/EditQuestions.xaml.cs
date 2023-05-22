@@ -27,11 +27,11 @@ namespace MVVM
 
 
         public string Name_Quiz { get => NameTextBoxEditQuestions.Text; set => NameTextBoxEditQuestions.Text = value; }
-        public string Question { get => QuestionTextBoxEditQuestions.Text; }
-        public string FirstAnswer { get => FirstAnswerTextBoxEditQuestions.Text; }
-        public string SecondAnswer { get => SecondAnswerTextBoxEditQuestions.Text; }
-        public string ThirdAnswer { get => ThirdAnswerTextBoxEditQuestions.Text; }
-        public string FourthAnswer { get => FourthAnswerTextBoxEditQuestions.Text; }
+        public string Question { get => QuestionTextBoxEditQuestions.Text; set => QuestionTextBoxEditQuestions.Text = value; }
+        public string FirstAnswer { get => FirstAnswerTextBoxEditQuestions.Text; set => FirstAnswerTextBoxEditQuestions.Text = value; }
+        public string SecondAnswer { get => SecondAnswerTextBoxEditQuestions.Text; set => SecondAnswerTextBoxEditQuestions.Text = value; }
+        public string ThirdAnswer { get => ThirdAnswerTextBoxEditQuestions.Text; set => ThirdAnswerTextBoxEditQuestions.Text = value; }
+        public string FourthAnswer { get => FourthAnswerTextBoxEditQuestions.Text; set => FourthAnswerTextBoxEditQuestions.Text = value;  }
         public string CorrectlyAnswer { get => GetSelectedRadioButtonText(); }
         public int ListBoxIndex { get => ListBox_EditQuestions.SelectedIndex; }
 
@@ -79,6 +79,21 @@ namespace MVVM
             {
                 return "Error!";
             }
+
+            
+        }
+
+        public void ClearForm()
+        {
+            QuestionTextBoxEditQuestions.Clear();
+            FirstAnswerTextBoxEditQuestions.Clear();
+            SecondAnswerTextBoxEditQuestions.Clear();
+            ThirdAnswerTextBoxEditQuestions.Clear();
+            FourthAnswerTextBoxEditQuestions.Clear();
+            FirstRadioButtonEdtiQuestions.IsChecked = false;
+            SecondRadioButtonEdtiQuestions.IsChecked = false;
+            ThirdRadioButtonEdtiQuestions.IsChecked = false;
+            FourthRadioButtonEdtiQuestions.IsChecked = false;
         }
     }
 }

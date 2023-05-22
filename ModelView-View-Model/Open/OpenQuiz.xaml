@@ -9,11 +9,12 @@
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
         <Label Content="Question" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="96" FontWeight="Bold" FontSize="20"/>
         <Label x:Name="QuestionLabelOpenQuiz" Content="Pytanie" HorizontalAlignment="Center" Margin="0,52,0,0" VerticalAlignment="Top" FontSize="16" Width="505"/>
+        <Label x:Name="TimerLabel" Content="Czas: 00:00" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" FontSize="16" />
         <RadioButton x:Name="FirstAnswerRadioButtonOpenQuiz" Content="1st Answer" HorizontalAlignment="Left" Margin="10,169,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="SecondAnswerRadioButtonOpenQuiz" Content="2nd Answer " HorizontalAlignment="Left" Margin="10,285,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="ThirdAnswerRadioButtonOpenQuiz" Content="3rd Answer" HorizontalAlignment="Left" Margin="646,169,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="FourthAnswerRadioButtonOpenQuiz" Content="4th Answer" HorizontalAlignment="Left" Margin="646,285,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="SubmitButtonOpenQuiz" Content="Submit" HorizontalAlignment="Left" Margin="10,352,0,0" VerticalAlignment="Top" Width="265" Height="36"/>
-        <Button x:Name="CheckButtonOpenQuiz" Content="Check" HorizontalAlignment="Left" Margin="505,352,0,0" VerticalAlignment="Top" Width="265" Height="36"/>
+        <Button x:Name="SubmitButtonOpenQuiz" Content="Submit" HorizontalAlignment="Left" Margin="10,352,0,0" VerticalAlignment="Top" Width="265" Height="36" Click="SubmitButtonOpenQuiz_Click"/>
+        <Button x:Name="CheckButtonOpenQuiz" Content="Check" HorizontalAlignment="Left" Margin="505,352,0,0" VerticalAlignment="Top" Width="265" Height="36" Click="CheckButtonOpenQuiz_Click"/>
     </Grid>
 </Window>

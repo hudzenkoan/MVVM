@@ -83,5 +83,17 @@ namespace MVVM
                 return "Error!";
             }
         }
+        public void ClearForm()
+        {
+            QuestionTextBoxNewQuiz.Clear();
+            FirstAnswerTextBoxNewQuiz.Clear();
+            SecondAnswerTextBoxNewQuiz.Clear();
+            ThirdAnswerTextBoxNewQuiz.Clear();
+            FourthAnswerTextBoxNewQuiz.Clear();
+            FirstAnswerRadioButton.IsChecked = false;
+            SecondAnswerRadioButton.IsChecked = false;
+            ThirdAnswerRadioButton.IsChecked = false;
+            FourthAnswerRadioButton.IsChecked = false;
+        }
     }
 }

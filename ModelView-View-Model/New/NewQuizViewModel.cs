@@ -178,6 +178,7 @@ namespace MVVM
             string DaneDoListBox = string.Join($", ", Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer);
             string formattedString = string.Format("Question: {0}, FirstAnswer: {1}, SecondAnswer: {2}, ThirdAnswer: {3}, FourthAnswer: {4}, CorrectlyAnswer: {5}", Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer);
             _newQuiz.ListBoxNewQuiz.Items.Add(formattedString);
+            _newQuiz.ClearForm();
 
 
 
@@ -209,6 +210,8 @@ namespace MVVM
         }
 
         
+
+
 
 
 
