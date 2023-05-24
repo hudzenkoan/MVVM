@@ -14,6 +14,7 @@ namespace MVVM
     {
         private OpenQuiz _openQuiz;
         private MainWindowModelView _mainWindowModelView;
+        private ResultsWindow _resultsWindow;
         private static string SelectedFilePath { get; set; }
         private static string SelectedFileName { get; set; }
         private string Question { get; set; }
@@ -24,16 +25,37 @@ namespace MVVM
         private string CorrectlyAnswer { get; set; }
         private int count { get; set; }
         private List<string> QuizData { get; set; }
-        
+        private int IloscPrawidlowychOdpowiedzi;
+        private int IloscPytan;
 
 
         public OpenQuizViewModel()
         {
-            
+
         }
         public void Open()
         {
             OpenWindow();
+        }
+
+        public void OpenWindowDoubleClick(string Path, string FileName)
+        {
+            QuizData = Model.ReadData(Path, FileName);
+
+            OpenQuiz window = new OpenQuiz();
+            _openQuiz = window;
+            _openQuiz.QuizData = QuizData;
+
+            _openQuiz.DataContext = this;
+
+            _openQuiz.SubmitAnswer += SubmitAnswerHandler;
+            _openQuiz.CheckAnswer += CheckAnswerHandler;
+            _openQuiz.Rozpocznij_Click += _openQuiz_Rozpocznij_Click;
+            _openQuiz.Zakoncz_Click += _openQuiz_Zakoncz_Click;
+
+            IloscPytan = QuizData.Count;
+
+            _openQuiz.ShowDialog();
         }
 
         private void OpenWindow()
@@ -42,16 +64,19 @@ namespace MVVM
             openFileDialog.Filter = "Bazy danych (*.db)|*.db|Wszystkie pliki (*.*)|*.*";
             openFileDialog.InitialDirectory = @"C:\";
             openFileDialog.Title = "Wybierz plik bazy danych";
+            string folderpath;
 
             bool? result = openFileDialog.ShowDialog();
 
             if (result == true)
             {
                 SelectedFilePath = openFileDialog.FileName;
-                SelectedFileName = Path.GetFileNameWithoutExtension(SelectedFilePath);
+                
+                SelectedFileName = Path.GetFileNameWithoutExtension(SelectedFilePath) + ".db";
 
+                folderpath = Path.GetDirectoryName(SelectedFilePath);
                 // Читаем данные и сохраняем их в QuizData
-                QuizData = Model.ReadData(SelectedFilePath, SelectedFileName);
+                QuizData = Model.ReadData(folderpath, SelectedFileName);
 
                 // Открываем диалоговое окно с передачей QuizData в конструктор
                 OpenQuiz window = new OpenQuiz();
@@ -64,19 +89,49 @@ namespace MVVM
                 // Подписываемся на события окна OpenQuiz
                 _openQuiz.SubmitAnswer += SubmitAnswerHandler;
                 _openQuiz.CheckAnswer += CheckAnswerHandler;
+                _openQuiz.Rozpocznij_Click += _openQuiz_Rozpocznij_Click;
+                _openQuiz.Zakoncz_Click += _openQuiz_Zakoncz_Click;
 
-                // Переходим к первому вопросу
-                MoveToNextQuestion();
+
+                IloscPytan = QuizData.Count;
+
 
                 // Открываем диалоговое окно
                 _openQuiz.ShowDialog();
             }
         }
+
+        private void _openQuiz_Zakoncz_Click()
+        {
+            ResultsWindow resultsWindow = new ResultsWindow();
+            _resultsWindow = resultsWindow;
+            _resultsWindow.Wynik = $"Wynik: {IloscPrawidlowychOdpowiedzi}/{IloscPytan}";
+            ShowResultsWindow();
+            
+            // Zamknij bieżące okno gry
+            _openQuiz.Close();
+            return;
+        }
+
+
+        private void _openQuiz_Rozpocznij_Click()
+        {
+            IloscPrawidlowychOdpowiedzi = 0;
+            _openQuiz.Rozpocznij_ustawienie = false;
+            _openQuiz.Submit_ustawienie = true;
+            _openQuiz.Check_Ustawienia = true;
+            MoveToNextQuestion();
+            if (!_openQuiz.timerStarted)
+            {
+                _openQuiz.timer.Start();
+                _openQuiz.timerStarted = true;
+            }
+        }
+
         private void ShowResultsWindow()
         {
             ResultsWindow resultsWindow = new ResultsWindow();
-            // Przekaż wyniki do okna wyników (możesz dodać parametry do konstruktora ResultsWindow)
-            // ...
+
             resultsWindow.ShowDialog();
         }
 
@@ -84,13 +139,8 @@ namespace MVVM
         {
             List<string> Data = _openQuiz.QuizData;
             // Проверяем, что есть еще вопросы в QuizData
-            if (count >= Data.Count)
+            if (count < Data.Count)
             {
-                ShowResultsWindow();
-                // Zamknij bieżące okno gry
-                _openQuiz.Close();
-                return;
-            }
                 string rowData = QuizData[count];
                 string[] rowDataParts = rowData.Split(',');
 
@@ -109,11 +159,16 @@ namespace MVVM
                 _openQuiz.FourthAnswer = FourthAnswer;
 
                 count++;
+
+            }
+            else {
+                return;
+            }
             
         }
-        
 
-        
+
+
 
         public void SubmitAnswerHandler()
         {
@@ -123,15 +178,15 @@ namespace MVVM
             if (selectedAnswer == CorrectlyAnswer)
             {
                 // Правильный ответ
-                MessageBox.Show("Odpowiedź prawidłowa!");
-
+                //MessageBox.Show("Odpowiedź prawidłowa!");
+                IloscPrawidlowychOdpowiedzi++;
                 // Переходим к следующему вопросу
                 MoveToNextQuestion();
             }
             else
             {
                 // Неправильный ответ
-                MessageBox.Show("Odpowiedź nieprawidłowa!");
+                //MessageBox.Show("Odpowiedź nieprawidłowa!");
 
                 // Переходим к следующему вопросу
                 MoveToNextQuestion();
@@ -143,5 +198,6 @@ namespace MVVM
             // Проверяем правильный ответ и отображаем сообщение
             MessageBox.Show($"Poprawna odpowiedź: {CorrectlyAnswer}");
         }
+
     }
 }

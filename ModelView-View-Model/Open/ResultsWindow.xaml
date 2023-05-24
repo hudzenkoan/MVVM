@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Results" Height="450" Width="800">
     <Grid>
-        <Label Content="Game Over!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+        <Label Content="Game Over!" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" Margin="322,111,0,0"/>
+        <Label x:Name="WynikLabelResultsWindow" Content="Label" HorizontalAlignment="Left" Margin="337,173,0,0" VerticalAlignment="Top" Height="37" Width="75"/>
         <!-- Dodaj inne elementy UI, takie jak etykiety z wynikami -->
     </Grid>
 </Window>

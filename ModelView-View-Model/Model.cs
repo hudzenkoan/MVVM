@@ -24,6 +24,8 @@ namespace MVVM
             SQLiteDataReader reader;
             SQLiteCommand command;
 
+            
+
             command = connection.CreateCommand();
             command.CommandText = $"SELECT * FROM {Path}";
             reader = command.ExecuteReader();
@@ -51,9 +53,11 @@ namespace MVVM
 
         public static List<string> ReadData(string path, string FileName)
         {
-            SQLiteConnection connection = new SQLiteConnection($"Data Source={path};Version=3;");
+            string FullPath = $"Data Source={path}"+$"\\"+$"{FileName};";
+            SQLiteConnection connection = new SQLiteConnection(FullPath);
             connection.Open();
-            List<string> result = ReadData(connection, FileName);
+            string FileNameWithourExtension = Path.GetFileNameWithoutExtension(FileName);
+            List<string> result = ReadData(connection, FileNameWithourExtension);
             connection.Close();
             return result;
             //catch(Exception ex)

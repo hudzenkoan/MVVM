@@ -19,9 +19,9 @@ namespace MVVM
     public partial class OpenQuiz : Window
     {
         private OpenQuizViewModel _viewmodel;
-        private DispatcherTimer timer;
-        private TimeSpan timeRemaining;
-        private bool timerStarted;
+        public DispatcherTimer timer;
+        public TimeSpan timeRemaining;
+        public bool timerStarted;
         public OpenQuiz()
         {
             
@@ -33,6 +33,8 @@ namespace MVVM
         }
         public event Action SubmitAnswer;
         public event Action CheckAnswer;
+        public event Action Rozpocznij_Click;
+        public event Action Zakoncz_Click;
 
         private void InitializeTimer()
         {
@@ -42,7 +44,7 @@ namespace MVVM
             timeRemaining = TimeSpan.FromMinutes(5); // Ustaw czas trwania quizu
             TimerLabel.Content = "Czas: " + timeRemaining.ToString(@"mm\:ss");
         }
-        private void Timer_Tick(object sender, EventArgs e)
+        public void Timer_Tick(object sender, EventArgs e)
         {
             timeRemaining -= TimeSpan.FromSeconds(1);
             TimerLabel.Content = "Czas: " + timeRemaining.ToString(@"mm\:ss");
@@ -53,6 +55,8 @@ namespace MVVM
                 MessageBox.Show("Gra zakończona!", "Koniec gry", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+
+      
          
 
         public string Question
@@ -77,8 +81,15 @@ namespace MVVM
         }
         public string CorrectlyAnswer { get; set; }
 
+        
+
+        public bool Rozpocznij_ustawienie { set => RozpocznijButtonOpenQuiz.IsEnabled = value; }
+        public bool Zakoncz_ustawienie { set => RozpocznijButtonOpenQuiz.IsEnabled = value; }
+        public bool Submit_ustawienie { set => SubmitButtonOpenQuiz.IsEnabled = value; }
+        public bool Check_Ustawienia { set => CheckButtonOpenQuiz.IsEnabled = value; }
+
         public string Answer { get => GetSelectedAnswer(); }
-        public Brush CorrectAnswerForeground { get => CorrectAnswerForeground; set => CorrectAnswerForeground = value; }
+        
         public List<string> QuizData { get; internal set; }
 
         
@@ -105,11 +116,7 @@ namespace MVVM
 
         private void SubmitButtonOpenQuiz_Click(object sender, RoutedEventArgs e)
         {
-            if (!timerStarted)
-            {
-                timer.Start();
-                timerStarted = true;
-            }
+            
             SubmitAnswer?.Invoke();
         }
 
@@ -121,6 +128,16 @@ namespace MVVM
                 timerStarted = true;
             }
             CheckAnswer?.Invoke();
+        }
+
+        private void RozpocznijButtonOpenQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            Rozpocznij_Click?.Invoke();
+        }
+
+        private void ZakonczButtonOpenQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            Zakoncz_Click?.Invoke();
         }
     }
 }

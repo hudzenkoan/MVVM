@@ -11,6 +11,7 @@ namespace MVVM
         private EditQuestions _editQuestions;
         private OpenQuiz _openQuiz;
         private MainWindow _mainwindow;
+        private Settings _settings;
 
 
         public MainWindowModelView(MainWindow mainWindow)
@@ -20,9 +21,19 @@ namespace MVVM
             _mainwindow.NewQuiz += _mainwindow_NewQuiz;
             _mainwindow.OpenQuiz += _mainwindow_OpenQuiz;
             _mainwindow.EditQuiz += _mainwindow_EditQuiz;
+            _mainwindow.Settings += _mainwindow_Settings;
+            _mainwindow.DoubleClick += _mainwindow_DoubleClick;
         }
 
-        
+        private void _mainwindow_DoubleClick()
+        {
+            DoubleClick();
+        }
+
+        private void _mainwindow_Settings()
+        {
+            Settings();
+        }
 
         public static EnterName enterNameWindow { get; private set; }
 
@@ -132,7 +143,29 @@ namespace MVVM
 
         }
 
+        public void Settings()
+        {
+            Settings window = new Settings();
+            window.PathSettings = Properties.Settings.Default.Path;
+            window.ShowDialog();
+            
+        }
 
+        public void DoubleClick()
+        {
+            var selectedItem = _mainwindow.ListBoxMain.SelectedItem as string;
+            string FileName = selectedItem;
+            string Path = Properties.Settings.Default.Path;
+
+            if (selectedItem != null)
+            {
+                
+                FileName = FileName.Replace("Name: ", ""); 
+                
+                OpenQuizViewModel viewModel = new OpenQuizViewModel();
+                viewModel.OpenWindowDoubleClick(Path, FileName);
+            }
+        }
 
 
         //public string Question { get; set; }

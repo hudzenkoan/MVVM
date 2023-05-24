@@ -18,9 +18,15 @@ namespace MVVM
     /// </summary>
     public partial class ResultsWindow : Window
     {
+        private OpenQuizViewModel _viewmodel;
         public ResultsWindow()
         {
             InitializeComponent();
+            _viewmodel = new OpenQuizViewModel();
         }
+        public string Wynik { get => WynikLabelResultsWindow.Content.ToString(); 
+            set => WynikLabelResultsWindow.Content = value; }
+        
+        
     }
 }
