@@ -32,7 +32,7 @@ namespace MVVM
 
         }
         public event Action SubmitAnswer;
-        public event Action CheckAnswer;
+        
         public event Action Rozpocznij_Click;
         public event Action Zakoncz_Click;
 
@@ -86,7 +86,7 @@ namespace MVVM
         public bool Rozpocznij_ustawienie { set => RozpocznijButtonOpenQuiz.IsEnabled = value; }
         public bool Zakoncz_ustawienie { set => RozpocznijButtonOpenQuiz.IsEnabled = value; }
         public bool Submit_ustawienie { set => SubmitButtonOpenQuiz.IsEnabled = value; }
-        public bool Check_Ustawienia { set => CheckButtonOpenQuiz.IsEnabled = value; }
+        
 
         public string Answer { get => GetSelectedAnswer(); }
         
@@ -120,15 +120,7 @@ namespace MVVM
             SubmitAnswer?.Invoke();
         }
 
-        private void CheckButtonOpenQuiz_Click(object sender, RoutedEventArgs e)
-        {
-            if (!timerStarted)
-            {
-                timer.Start();
-                timerStarted = true;
-            }
-            CheckAnswer?.Invoke();
-        }
+        
 
         private void RozpocznijButtonOpenQuiz_Click(object sender, RoutedEventArgs e)
         {

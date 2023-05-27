@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MVVM"
         mc:Ignorable="d"
-        Title="Settings" Height="274" Width="409">
+        Title="Settings" Height="189" Width="409" ResizeMode="NoResize">
     <Grid>
         <TextBox x:Name="PathTextBoxSettings" Margin="15,43,100,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True"/>
-        <Button x:Name="EditButtonSettings" Content="Edit" Margin="331,0,15,197" VerticalAlignment="Bottom" Click="EditButtonSettings_Click"/>
-        <Button Content="Save" Margin="15,212,282,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button x:Name="EditButtonSettings" Content="Edit" Margin="325,42,21,0" VerticalAlignment="Top" Click="EditButtonSettings_Click"/>
+        <Button Content="Save" Margin="18,0,279,27" VerticalAlignment="Bottom" Click="Button_Click"/>
         <Button Content="Exit" Margin="274,0,15,27" VerticalAlignment="Bottom" Click="Button_Click_1"/>
         <Label Content="Path for folder with Quizes" HorizontalAlignment="Left" Margin="20,13,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
 

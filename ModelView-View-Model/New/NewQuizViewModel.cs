@@ -60,7 +60,6 @@ namespace MVVM
             DeleteQuestions();
         }
 
-
         
 
         public void ContinueCreateQuiz()
@@ -68,10 +67,21 @@ namespace MVVM
 
             NewQuiz newquiz = new NewQuiz();
             newquiz.NameTextBoxNewQuiz.Text = _enterName.Name;
+
+            if (newquiz.NameTextBoxNewQuiz.Text == "")
+            {
+                MessageBox.Show("Proszę wpisać nazwę Quizu", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+
             if (MainWindowModelView.enterNameWindow != null)
             {
                 MainWindowModelView.enterNameWindow.Close();
             }
+
+            
+
 
             newquiz.ShowDialog();
            
@@ -166,8 +176,42 @@ namespace MVVM
                 //Model.CreateDataBase(Name, Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer);
         }
 
+        private bool IsAnyTextBoxEmpty()
+        {
+            if (_newQuiz.FirstAnswerTextBoxNewQuiz.Text == "" || _newQuiz.SecondAnswerTextBoxNewQuiz.Text == "" || _newQuiz.ThirdAnswerTextBoxNewQuiz.Text == "" || _newQuiz.FourthAnswerTextBoxNewQuiz.Text == "")
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+
+        private bool isAnyRadioButtonChecked()
+        {
+            if (_newQuiz.FirstAnswerRadioButton.IsChecked == true || _newQuiz.SecondAnswerRadioButton.IsChecked == true || _newQuiz.ThirdAnswerRadioButton.IsChecked == true || _newQuiz.FourthAnswerRadioButton.IsChecked == true)
+            {
+                
+                return true;
+            }
+
+            return false;
+        }
+
+
         public void AddQuestions()
         {
+            if(!isAnyRadioButtonChecked() || IsAnyTextBoxEmpty())
+            {
+                MessageBox.Show("Proszę sprawdzić poprawność danych. Czy wszystkie dane są wprowadzone?", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+
+
+
+
+
             string Name = _newQuiz.Name;
             string Question = _newQuiz.Question;
             string FirstAnswer = _newQuiz.FirstAnswer;

@@ -123,8 +123,42 @@ namespace MVVM
             //    Model.DropTable(SelectedFileName, selectedFilePath);
             //}
         }
+
+        private bool IsAnyTextBoxEmpty()
+        {
+            if (_editQuestions.FirstAnswerTextBoxEditQuestions.Text == "" || _editQuestions.SecondAnswerTextBoxEditQuestions.Text == "" || _editQuestions.ThirdAnswerTextBoxEditQuestions.Text == "" || _editQuestions.FourthAnswerTextBoxEditQuestions.Text == "")
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+
+        private bool isAnyRadioButtonChecked()
+        {
+            if (_editQuestions.FirstRadioButtonEdtiQuestions.IsChecked == true || _editQuestions.SecondRadioButtonEdtiQuestions.IsChecked == true || _editQuestions.ThirdRadioButtonEdtiQuestions.IsChecked == true || _editQuestions.FourthRadioButtonEdtiQuestions.IsChecked == true)
+            {
+
+                return true;
+            }
+
+            return false;
+        }
+
+
+
         public void AddQuestion()
         {
+            if (!isAnyRadioButtonChecked() || IsAnyTextBoxEmpty())
+            {
+                MessageBox.Show("Proszę sprawdzić poprawność danych. Czy wszystkie dane są wprowadzone?", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+
+
+
             string Name = _editQuestions.Name;
             string Question = _editQuestions.Question;
             string FirstAnswer = _editQuestions.FirstAnswer;

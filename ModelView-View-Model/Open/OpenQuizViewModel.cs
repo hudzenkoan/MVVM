@@ -49,7 +49,7 @@ namespace MVVM
             _openQuiz.DataContext = this;
 
             _openQuiz.SubmitAnswer += SubmitAnswerHandler;
-            _openQuiz.CheckAnswer += CheckAnswerHandler;
+            
             _openQuiz.Rozpocznij_Click += _openQuiz_Rozpocznij_Click;
             _openQuiz.Zakoncz_Click += _openQuiz_Zakoncz_Click;
 
@@ -88,7 +88,7 @@ namespace MVVM
 
                 // Подписываемся на события окна OpenQuiz
                 _openQuiz.SubmitAnswer += SubmitAnswerHandler;
-                _openQuiz.CheckAnswer += CheckAnswerHandler;
+                
                 _openQuiz.Rozpocznij_Click += _openQuiz_Rozpocznij_Click;
                 _openQuiz.Zakoncz_Click += _openQuiz_Zakoncz_Click;
 
@@ -129,7 +129,7 @@ namespace MVVM
             IloscPrawidlowychOdpowiedzi = 0;
             _openQuiz.Rozpocznij_ustawienie = false;
             _openQuiz.Submit_ustawienie = true;
-            _openQuiz.Check_Ustawienia = true;
+            
             MoveToNextQuestion();
             if (!_openQuiz.timerStarted)
             {
@@ -179,19 +179,42 @@ namespace MVVM
                 _openQuiz.FourthAnswerRadioButtonOpenQuiz.Content = "";
                 _openQuiz.QuestionLabelOpenQuiz.Content = "Pytania się skonczyły. Kliknij Zakoncz dla wyświetlenia wyników ";
 
-
+                _openQuiz.FirstAnswerRadioButtonOpenQuiz.IsChecked = false;
+                _openQuiz.SecondAnswerRadioButtonOpenQuiz.IsChecked = false;
+                _openQuiz.ThirdAnswerRadioButtonOpenQuiz.IsChecked = false;
+                _openQuiz.FourthAnswerRadioButtonOpenQuiz.IsChecked = false;
                 return;
             }
             
         }
 
 
+        private bool IsAnyRadioButtonChecked()
+        {
+            if (_openQuiz.FirstAnswerRadioButtonOpenQuiz.IsChecked == true || _openQuiz.SecondAnswerRadioButtonOpenQuiz.IsChecked == true ||
+                _openQuiz.ThirdAnswerRadioButtonOpenQuiz.IsChecked == true || _openQuiz.FourthAnswerRadioButtonOpenQuiz.IsChecked == true)
+            {
+                return true;
+            }
 
+            return false;
+        }
 
         public void SubmitAnswerHandler()
         {
+
+
             string selectedAnswer = _openQuiz.Answer;
 
+
+
+            if (!IsAnyRadioButtonChecked())
+            {
+                MessageBox.Show("Proszę wybrać odpowiedź", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+
+            }
+            
             // Проверяем ответ и выполняем соответствующие действия
             if (selectedAnswer == CorrectlyAnswer)
             {
@@ -209,13 +232,15 @@ namespace MVVM
                 // Переходим к следующему вопросу
                 MoveToNextQuestion();
             }
-        }
 
-        public void CheckAnswerHandler()
-        {
-            // Проверяем правильный ответ и отображаем сообщение
-            MessageBox.Show($"Poprawna odpowiedź: {CorrectlyAnswer}");
+            _openQuiz.FirstAnswerRadioButtonOpenQuiz.IsChecked = false;
+            _openQuiz.SecondAnswerRadioButtonOpenQuiz.IsChecked = false;
+            _openQuiz.ThirdAnswerRadioButtonOpenQuiz.IsChecked = false;
+            _openQuiz.FourthAnswerRadioButtonOpenQuiz.IsChecked = false;
+
+
         }
+        
 
     }
 }

@@ -166,7 +166,16 @@ namespace MVVM
                 string SelectedFileName = Path.GetFileNameWithoutExtension(selectedFilePath);
                 window.Name_Quiz = SelectedFileName;
 
-                List<string> data = Model.ReadData(selectedFilePath, SelectedFileName);
+
+                
+
+                string selectedFileName = Path.GetFileNameWithoutExtension(selectedFilePath) + ".db";
+
+                string folderpath = Path.GetDirectoryName(selectedFilePath);
+                // Читаем данные и сохраняем их в QuizData
+                
+
+                List<string> data = Model.ReadData(folderpath, selectedFileName);
 
                 AddDataToListBox(window, data);
 
