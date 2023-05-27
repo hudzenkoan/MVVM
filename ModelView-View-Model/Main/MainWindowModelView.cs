@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Win32;
 using System.IO;
+using System.Linq;
 
 namespace MVVM
 {
@@ -23,6 +24,12 @@ namespace MVVM
             _mainwindow.EditQuiz += _mainwindow_EditQuiz;
             _mainwindow.Settings += _mainwindow_Settings;
             _mainwindow.DoubleClick += _mainwindow_DoubleClick;
+            _mainwindow.FindButton += _mainwindow_FindButton;
+        }
+
+        private void _mainwindow_FindButton()
+        {
+            FindQuizes();
         }
 
         private void _mainwindow_DoubleClick()
@@ -51,6 +58,39 @@ namespace MVVM
         {
             NewQuiz();
         }
+
+        public void FindQuizes()
+        {
+            
+
+            string directoryPath = Properties.Settings.Default.Path;
+
+            string SearchText = _mainwindow.Find;
+            _mainwindow.ListBoxMain.Items.Clear();
+            _mainwindow.FindTextBoxMain.Clear();
+
+            try
+            {
+                // Получение списка файлов, соответствующих заданному тексту
+                string[] files = Directory.GetFiles(directoryPath, "*.db")
+                                           .Where(file => Path.GetFileName(file).ToLower().Contains(SearchText.ToLower()))
+                                           .ToArray();
+
+                // Добавление найденных файлов в ListBox
+                foreach (string file in files)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(file);
+                    string listItem = $"Name: {fileName}.db";
+                    _mainwindow.ListBoxMain.Items.Add(listItem);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Обработка исключений, если не удалось получить список файлов
+                System.Windows.Forms.MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
 
         public void NewQuiz()
         {

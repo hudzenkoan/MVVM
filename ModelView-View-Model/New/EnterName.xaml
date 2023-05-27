@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MVVM"
         mc:Ignorable="d"
-        Title="Creator" Height="128" Width="246" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+        Title="Creator" Height="128" Width="246" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" ResizeMode="NoResize">
     <Grid Margin="0,0,204,190">
         <TextBox x:Name="EnterNameTextBox" TextWrapping="Wrap" Margin="12,36,-195,-54" RenderTransformOrigin="0.5,0.5">
             <TextBox.RenderTransform>

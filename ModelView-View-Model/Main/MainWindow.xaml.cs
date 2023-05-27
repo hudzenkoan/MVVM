@@ -55,9 +55,12 @@ namespace MVVM
         public event Action EditQuiz;
         public event Action Settings;
         public event Action DoubleClick;
+        public event Action FindButton;
+
 
         public string Find { 
             get => FindTextBoxMain.Text; 
+            set => FindTextBoxMain.Text = value;
         }
 
         private void NewButtonMain_Click(object sender, RoutedEventArgs e)
@@ -83,6 +86,11 @@ namespace MVVM
         private void MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DoubleClick?.Invoke();
+        }
+
+        private void FindButtonMain_Click(object sender, RoutedEventArgs e)
+        {
+            FindButton?.Invoke();
         }
     }
 }

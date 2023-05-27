@@ -103,19 +103,29 @@ namespace MVVM
 
         private void _openQuiz_Zakoncz_Click()
         {
-            ResultsWindow resultsWindow = new ResultsWindow();
-            _resultsWindow = resultsWindow;
-            _resultsWindow.Wynik = $"Wynik: {IloscPrawidlowychOdpowiedzi}/{IloscPytan}";
-            ShowResultsWindow();
-            
-            // Zamknij bieżące okno gry
+            _openQuiz.timer.Stop();
+
+            _resultsWindow = new ResultsWindow(this);
+            //_resultsWindow.DataContext = this;
+
+            string Wynik = $"Wynik: {IloscPrawidlowychOdpowiedzi}/{IloscPytan}";
+
+            _resultsWindow.Wynik = Wynik;
+            _resultsWindow.ShowDialog();
+
+            // Закрыть текущее окно игры
             _openQuiz.Close();
-            return;
+
         }
 
 
         private void _openQuiz_Rozpocznij_Click()
         {
+
+            _openQuiz.FirstAnswerRadioButtonOpenQuiz.IsChecked = false;
+            _openQuiz.SecondAnswerRadioButtonOpenQuiz.IsChecked = false;
+            _openQuiz.ThirdAnswerRadioButtonOpenQuiz.IsChecked = false;
+            _openQuiz.FourthAnswerRadioButtonOpenQuiz.IsChecked = false;
             IloscPrawidlowychOdpowiedzi = 0;
             _openQuiz.Rozpocznij_ustawienie = false;
             _openQuiz.Submit_ustawienie = true;
@@ -128,12 +138,12 @@ namespace MVVM
             }
         }
 
-        private void ShowResultsWindow()
-        {
-            ResultsWindow resultsWindow = new ResultsWindow();
+        //private void ShowResultsWindow()
+        //{
+        //    ResultsWindow resultsWindow = new ResultsWindow(this);
 
-            resultsWindow.ShowDialog();
-        }
+        //    resultsWindow.ShowDialog();
+        //}
 
         private void MoveToNextQuestion()
         {
@@ -162,6 +172,14 @@ namespace MVVM
 
             }
             else {
+                _openQuiz.SubmitButtonOpenQuiz.IsEnabled = false;
+                _openQuiz.FirstAnswerRadioButtonOpenQuiz.Content = "";
+                _openQuiz.SecondAnswerRadioButtonOpenQuiz.Content = "";
+                _openQuiz.ThirdAnswerRadioButtonOpenQuiz.Content = "";
+                _openQuiz.FourthAnswerRadioButtonOpenQuiz.Content = "";
+                _openQuiz.QuestionLabelOpenQuiz.Content = "Pytania się skonczyły. Kliknij Zakoncz dla wyświetlenia wyników ";
+
+
                 return;
             }
             

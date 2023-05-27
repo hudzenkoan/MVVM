@@ -19,10 +19,10 @@ namespace MVVM
     public partial class ResultsWindow : Window
     {
         private OpenQuizViewModel _viewmodel;
-        public ResultsWindow()
+        public ResultsWindow(OpenQuizViewModel viewModel)
         {
             InitializeComponent();
-            _viewmodel = new OpenQuizViewModel();
+            _viewmodel = viewModel;
         }
         public string Wynik { get => WynikLabelResultsWindow.Content.ToString(); 
             set => WynikLabelResultsWindow.Content = value; }
