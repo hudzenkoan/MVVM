@@ -35,6 +35,10 @@ namespace MVVM
             AddQuestion();
         }
 
+       
+
+
+
         public void DeleteQuestions()
         {
 
@@ -103,25 +107,6 @@ namespace MVVM
                 }
             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //if (result == true)
-            //{
-            //    string selectedFilePath = saveFileDialog.FileName;
-            //    string SelectedFileName = Path.GetFileNameWithoutExtension(selectedFilePath);
-            //    Model.DropTable(SelectedFileName, selectedFilePath);
-            //}
         }
 
         private bool IsAnyTextBoxEmpty()

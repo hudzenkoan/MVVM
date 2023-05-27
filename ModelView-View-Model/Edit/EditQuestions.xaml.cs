@@ -31,8 +31,27 @@ namespace MVVM
         public string FirstAnswer { get => FirstAnswerTextBoxEditQuestions.Text; set => FirstAnswerTextBoxEditQuestions.Text = value; }
         public string SecondAnswer { get => SecondAnswerTextBoxEditQuestions.Text; set => SecondAnswerTextBoxEditQuestions.Text = value; }
         public string ThirdAnswer { get => ThirdAnswerTextBoxEditQuestions.Text; set => ThirdAnswerTextBoxEditQuestions.Text = value; }
-        public string FourthAnswer { get => FourthAnswerTextBoxEditQuestions.Text; set => FourthAnswerTextBoxEditQuestions.Text = value;  }
-        public string CorrectlyAnswer { get => GetSelectedRadioButtonText(); }
+        public string FourthAnswer { get => FourthAnswerTextBoxEditQuestions.Text; set => FourthAnswerTextBoxEditQuestions.Text = value; }
+        public string CorrectlyAnswer { get => GetSelectedRadioButtonText(); set
+            {
+                if (value == FirstAnswerTextBoxEditQuestions.Text)
+                {
+                    FirstRadioButtonEdtiQuestions.IsChecked = true;
+                }
+                else if (value == SecondAnswerTextBoxEditQuestions.Text)
+                {
+                    SecondRadioButtonEdtiQuestions.IsChecked = true;
+                }
+                else if (value == ThirdAnswerTextBoxEditQuestions.Text)
+                {
+                    ThirdRadioButtonEdtiQuestions.IsChecked = true;
+                }
+                else if (value == FourthAnswerTextBoxEditQuestions.Text)
+                {
+                    FourthRadioButtonEdtiQuestions.IsChecked = true;
+                }
+            }
+        }
         public int ListBoxIndex { get => ListBox_EditQuestions.SelectedIndex; }
 
 
@@ -94,6 +113,26 @@ namespace MVVM
             SecondRadioButtonEdtiQuestions.IsChecked = false;
             ThirdRadioButtonEdtiQuestions.IsChecked = false;
             FourthRadioButtonEdtiQuestions.IsChecked = false;
+        }
+
+        private void ListBox_EditQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListBox_EditQuestions.SelectedItem != null)
+            {
+                string selectedQuestion = ListBox_EditQuestions.SelectedItem.ToString();
+
+                string[] questionParts = selectedQuestion.Split(new string[] { ", " }, StringSplitOptions.None);
+
+                if (questionParts.Length == 6)
+                {
+                    Question = questionParts[0].Replace("Question: ", "");
+                    FirstAnswer = questionParts[1].Replace("FirstAnswer: ", "");
+                    SecondAnswer = questionParts[2].Replace("SecondAnswer: ", "");
+                    ThirdAnswer = questionParts[3].Replace("ThirdAnswer: ", "");
+                    FourthAnswer = questionParts[4].Replace("FourthAnswer: ", "");
+                    CorrectlyAnswer = questionParts[5].Replace("CorrectlyAnswer: ", "");
+                }
+            }
         }
     }
 }

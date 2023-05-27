@@ -152,7 +152,7 @@ namespace MVVM
             if (count < Data.Count)
             {
                 string rowData = QuizData[count];
-                string[] rowDataParts = rowData.Split(',');
+                string[] rowDataParts = rowData.Split('|');
 
                 Question = rowDataParts[0].Trim();
                 FirstAnswer = rowDataParts[1].Trim();

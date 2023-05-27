@@ -42,7 +42,7 @@ namespace MVVM
                 string correctlyAnswer = (string)reader["CorrectlyAnswer"];
 
                 // Tworzenie łańcucha znaków z danymi oddzielonymi przecinkami
-                string rowData = string.Join(", ", question, firstAnswer, secondAnswer, thirdAnswer, fourthAnswer, correctlyAnswer);
+                string rowData = string.Join("| ", question, firstAnswer, secondAnswer, thirdAnswer, fourthAnswer, correctlyAnswer);
 
                 // Dodawanie łańcucha znaków do listy danych
                 data.Add(rowData);
@@ -71,7 +71,7 @@ namespace MVVM
 
         private static void InsertData(SQLiteConnection connection, string Name, string Question, string FirstAnswer, string SecondAnswer, string ThirdAnswer, string FourthAnswer, string CorrectlyAnswer)
         {
-            string query = $"INSERT INTO {Name} (Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer) VALUES (@Question, @FirstAnswer, @SecondAnswer, @ThirdAnswer, @FourthAnswer, @CorrectlyAnswer)";
+            string query = $"INSERT INTO {Name} (Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer) VALUES (@Question, @FirstAnswer, @SecondAnswer, @ThirdAnswer, @FourthAnswer, @CorrectlyAnswer)".Replace(",", "|");
             SQLiteCommand command = new SQLiteCommand(query, connection);
             command.Parameters.AddWithValue("@Question", Question); 
             command.Parameters.AddWithValue("@FirstAnswer", FirstAnswer); 
@@ -89,7 +89,7 @@ namespace MVVM
         {
 
             for (int i = 0; i < count; i++) {
-                string[] Base = data[i].Split(',');
+                string[] Base = data[i].Split('|');
                 string question = Base[0];
                 string firstanswer = Base[1];
                 string secondanswer = Base[2];
@@ -154,24 +154,24 @@ namespace MVVM
             }
         }
         
-        private static void DropTable(SQLiteConnection connection, List<string> Odpowiedz, string Name, int count, string path)
-        {
-            SQLiteCommand command = connection.CreateCommand();
-            command.CommandText = $"DROP TABLE {Name}";
-            command.ExecuteNonQuery();
-            CreateDataBase(connection, path, Name, Odpowiedz, count);
+        //private static void DropTable(SQLiteConnection connection, List<string> Odpowiedz, string Name, int count, string path)
+        //{
+        //    SQLiteCommand command = connection.CreateCommand();
+        //    command.CommandText = $"DROP TABLE {Name}";
+        //    command.ExecuteNonQuery();
+        //    CreateDataBase(connection, path, Name, Odpowiedz, count);
 
 
-        }
+        //}
 
-        public static void DropTable(List<string> Odpowiedz, string Name, int count, string path)
-        {
-            SQLiteConnection connection = new SQLiteConnection($"Data Source={path};Version=3;");
+        //public static void DropTable(List<string> Odpowiedz, string Name, int count, string path)
+        //{
+        //    SQLiteConnection connection = new SQLiteConnection($"Data Source={path};Version=3;");
 
-            connection.Open();
-            DropTable(connection, Odpowiedz, Name, count, path);
-            connection.Close();
-        }
+        //    connection.Open();
+        //    DropTable(connection, Odpowiedz, Name, count, path);
+        //    connection.Close();
+        //}
 
 
        

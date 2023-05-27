@@ -130,7 +130,7 @@ namespace MVVM
             foreach (string rowData in data)
             {
                 // Podział danych w łańcuchu znaków na poszczególne elementy
-                string[] rowDataParts = rowData.Split(',');
+                string[] rowDataParts = rowData.Split('|');
 
                 // Tworzenie sformatowanego łańcucha znaków w oczekiwanym formacie
                 string formattedData = string.Format("Question: {0}, FirstAnswer: {1}, SecondAnswer: {2}, ThirdAnswer: {3}, FourthAnswer: {4}, CorrectlyAnswer: {5}",
