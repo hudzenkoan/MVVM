@@ -133,7 +133,7 @@ namespace MVVM
                 string[] rowDataParts = rowData.Split('|');
 
                 // Tworzenie sformatowanego łańcucha znaków w oczekiwanym formacie
-                string formattedData = string.Format("Question: {0}, FirstAnswer: {1}, SecondAnswer: {2}, ThirdAnswer: {3}, FourthAnswer: {4}, CorrectlyAnswer: {5}",
+                string formattedData = string.Format("Question: {0}| FirstAnswer: {1}| SecondAnswer: {2}| ThirdAnswer: {3}| FourthAnswer: {4}| CorrectlyAnswer: {5}",
                     rowDataParts[0].Trim(),
                     rowDataParts[1].Trim(),
                     rowDataParts[2].Trim(),

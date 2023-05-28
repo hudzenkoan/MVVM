@@ -121,7 +121,7 @@ namespace MVVM
             {
                 string selectedQuestion = ListBox_EditQuestions.SelectedItem.ToString();
 
-                string[] questionParts = selectedQuestion.Split(new string[] { ", " }, StringSplitOptions.None);
+                string[] questionParts = selectedQuestion.Split(new string[] { "| " }, StringSplitOptions.None);
 
                 if (questionParts.Length == 6)
                 {

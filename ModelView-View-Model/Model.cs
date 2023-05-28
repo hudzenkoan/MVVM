@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.SQLite;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace MVVM
 {
     public class Model
     {
         //zmienne
-        static string path = "Data Source=C:/Users/hudze/source/repos/MVVM/ModelView-View-Model/Quiz.db";
+       
         public string Find { get; }
         public string Question { get; set; }
         public string FirstAnswer{get; set;}
@@ -34,17 +35,21 @@ namespace MVVM
 
             while (reader.Read())
             {
-                string question = (string)reader["Question"];
-                string firstAnswer = (string)reader["FirstAnswer"];
-                string secondAnswer = (string)reader["SecondAnswer"];
-                string thirdAnswer = (string)reader["ThirdAnswer"];
-                string fourthAnswer = (string)reader["FourthAnswer"];
-                string correctlyAnswer = (string)reader["CorrectlyAnswer"];
+                string questionEncrypted = (string)reader["Question"];
+                string firstAnswerEncrypted = (string)reader["FirstAnswer"];
+                string secondAnswerEncrypted = (string)reader["SecondAnswer"];
+                string thirdAnswerEncrypted = (string)reader["ThirdAnswer"];
+                string fourthAnswerEncrypted = (string)reader["FourthAnswer"];
+                string correctlyAnswerEncrypted = (string)reader["CorrectlyAnswer"];
 
-                // Tworzenie łańcucha znaków z danymi oddzielonymi przecinkami
+                string question = DecryptData(questionEncrypted);
+                string firstAnswer = DecryptData(firstAnswerEncrypted);
+                string secondAnswer = DecryptData(secondAnswerEncrypted);
+                string thirdAnswer = DecryptData(thirdAnswerEncrypted);
+                string fourthAnswer = DecryptData(fourthAnswerEncrypted);
+                string correctlyAnswer = DecryptData(correctlyAnswerEncrypted);
+
                 string rowData = string.Join("| ", question, firstAnswer, secondAnswer, thirdAnswer, fourthAnswer, correctlyAnswer);
-
-                // Dodawanie łańcucha znaków do listy danych
                 data.Add(rowData);
             }
 
@@ -71,20 +76,27 @@ namespace MVVM
 
         private static void InsertData(SQLiteConnection connection, string Name, string Question, string FirstAnswer, string SecondAnswer, string ThirdAnswer, string FourthAnswer, string CorrectlyAnswer)
         {
-            string query = $"INSERT INTO {Name} (Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer) VALUES (@Question, @FirstAnswer, @SecondAnswer, @ThirdAnswer, @FourthAnswer, @CorrectlyAnswer)".Replace(",", "|");
+            string questionEncrypted = EncryptData(Question);
+            string firstAnswerEncrypted = EncryptData(FirstAnswer);
+            string secondAnswerEncrypted = EncryptData(SecondAnswer);
+            string thirdAnswerEncrypted = EncryptData(ThirdAnswer);
+            string fourthAnswerEncrypted = EncryptData(FourthAnswer);
+            string correctlyAnswerEncrypted = EncryptData(CorrectlyAnswer);
+
+            string query = $"INSERT INTO {Name} (Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer) VALUES (@Question, @FirstAnswer, @SecondAnswer, @ThirdAnswer, @FourthAnswer, @CorrectlyAnswer)";
             SQLiteCommand command = new SQLiteCommand(query, connection);
-            command.Parameters.AddWithValue("@Question", Question); 
-            command.Parameters.AddWithValue("@FirstAnswer", FirstAnswer); 
-            command.Parameters.AddWithValue("@SecondAnswer", SecondAnswer); 
-            command.Parameters.AddWithValue("@ThirdAnswer", ThirdAnswer); 
-            command.Parameters.AddWithValue("@FourthAnswer", FourthAnswer);
-            command.Parameters.AddWithValue("@CorrectlyAnswer", CorrectlyAnswer);
+            command.Parameters.AddWithValue("@Question", questionEncrypted);
+            command.Parameters.AddWithValue("@FirstAnswer", firstAnswerEncrypted);
+            command.Parameters.AddWithValue("@SecondAnswer", secondAnswerEncrypted);
+            command.Parameters.AddWithValue("@ThirdAnswer", thirdAnswerEncrypted);
+            command.Parameters.AddWithValue("@FourthAnswer", fourthAnswerEncrypted);
+            command.Parameters.AddWithValue("@CorrectlyAnswer", correctlyAnswerEncrypted);
 
             command.ExecuteNonQuery();
 
         }
 
-
+        
         private static void CreateDataBase(SQLiteConnection connection, string Path, string Name, List<string> data, int count)
         {
 
@@ -110,6 +122,98 @@ namespace MVVM
             connection.Close();
         }
 
+        private static string EncryptData(string data)
+        {
+
+            string password = Properties.Settings.Default.Password;
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+            byte[] encryptedBytes;
+
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashedBytes = sha256.ComputeHash(passwordBytes);
+
+                AesManaged aes = new AesManaged();
+                aes.KeySize = 256;
+                aes.BlockSize = 128;
+                aes.Key = hashedBytes;
+
+                using (ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV))
+                {
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        using (CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
+                        {
+                            byte[] dataBytes = Encoding.UTF8.GetBytes(data);
+                            cryptoStream.Write(dataBytes, 0, dataBytes.Length);
+                            cryptoStream.FlushFinalBlock();
+                            encryptedBytes = memoryStream.ToArray();
+                        }
+                    }
+                }
+
+                byte[] resultBytes = new byte[aes.IV.Length + encryptedBytes.Length];
+                Array.Copy(aes.IV, 0, resultBytes, 0, aes.IV.Length);
+                Array.Copy(encryptedBytes, 0, resultBytes, aes.IV.Length, encryptedBytes.Length);
+
+                return Convert.ToBase64String(resultBytes);
+            }
+        }
+
+
+        private static string DecryptData(string encryptedData)
+        {
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(Properties.Settings.Default.Password);
+            byte[] encryptedBytes = Convert.FromBase64String(encryptedData);
+            byte[] iv = new byte[16];
+            byte[] dataBytes;
+
+            Array.Copy(encryptedBytes, 0, iv, 0, iv.Length);
+            Array.Copy(encryptedBytes, iv.Length, encryptedBytes, 0, encryptedBytes.Length - iv.Length);
+            Array.Resize(ref encryptedBytes, encryptedBytes.Length - iv.Length);
+
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashedBytes = sha256.ComputeHash(passwordBytes);
+
+                using (AesManaged aes = new AesManaged())
+                {
+                    aes.KeySize = 256;
+                    aes.BlockSize = 128;
+                    aes.Key = hashedBytes;
+                    aes.IV = iv;
+
+                    using (ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
+                    {
+                        using (MemoryStream memoryStream = new MemoryStream(encryptedBytes))
+                        {
+                            using (CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+                            {
+                                using (StreamReader reader = new StreamReader(cryptoStream, Encoding.UTF8))
+                                {
+                                    string decryptedData = reader.ReadToEnd();
+                                    return decryptedData;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public static void CreateDataBase(List<string> Odpowiedz, string Name, int count, string path)
         {
             //string path_for_base = $"C:/Users/hudze/source/repos/MVVM/ModelView-View-Model/";
@@ -128,50 +232,33 @@ namespace MVVM
 
 
 
-        public static void InsertData(string Name, string Question, string FirstAnswer, string SecondAnswer, string ThirdAnswer, string FourthAnswer, string CorrectlyAnswer)
-        {
-
-            SQLiteConnection connection = new SQLiteConnection($"{path};Version=3;");
-
-            string name = Name;
-            string question = Question;
-            string firstAnswer = FirstAnswer;
-            string secondAnswer = SecondAnswer;
-            string thirdAnswer = ThirdAnswer;
-            string fourthAnswer = FourthAnswer;
-            string correctlyAnswer = CorrectlyAnswer;
-
-
-            connection.Open();
-            if (connection.State == System.Data.ConnectionState.Open)
-            {
-                InsertData(connection, name, question, firstAnswer, secondAnswer, thirdAnswer, fourthAnswer, CorrectlyAnswer);
-                connection.Close();
-            }
-            else
-            {
-                File.WriteAllText("неудача.txt", "неудача");
-            }
-        }
-        
-        //private static void DropTable(SQLiteConnection connection, List<string> Odpowiedz, string Name, int count, string path)
+        //public static void InsertData(string Name, string Question, string FirstAnswer, string SecondAnswer, string ThirdAnswer, string FourthAnswer, string CorrectlyAnswer)
         //{
-        //    SQLiteCommand command = connection.CreateCommand();
-        //    command.CommandText = $"DROP TABLE {Name}";
-        //    command.ExecuteNonQuery();
-        //    CreateDataBase(connection, path, Name, Odpowiedz, count);
 
+        //    SQLiteConnection connection = new SQLiteConnection($"{path};Version=3;");
 
-        //}
+        //    string name = Name;
+        //    string question = Question;
+        //    string firstAnswer = FirstAnswer;
+        //    string secondAnswer = SecondAnswer;
+        //    string thirdAnswer = ThirdAnswer;
+        //    string fourthAnswer = FourthAnswer;
+        //    string correctlyAnswer = CorrectlyAnswer;
 
-        //public static void DropTable(List<string> Odpowiedz, string Name, int count, string path)
-        //{
-        //    SQLiteConnection connection = new SQLiteConnection($"Data Source={path};Version=3;");
 
         //    connection.Open();
-        //    DropTable(connection, Odpowiedz, Name, count, path);
-        //    connection.Close();
+        //    if (connection.State == System.Data.ConnectionState.Open)
+        //    {
+        //        InsertData(connection, name, question, firstAnswer, secondAnswer, thirdAnswer, fourthAnswer, CorrectlyAnswer);
+        //        connection.Close();
+        //    }
+        //    else
+        //    {
+        //        File.WriteAllText("неудача.txt", "неудача");
+        //    }
         //}
+        
+        
 
 
        
