@@ -18,6 +18,7 @@ namespace MVVM
     /// </summary>
     public partial class OpenQuiz : Window
     {
+
         private OpenQuizViewModel _viewmodel;
         public DispatcherTimer timer;
         public TimeSpan timeRemaining;
@@ -41,7 +42,7 @@ namespace MVVM
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
-            timeRemaining = TimeSpan.FromMinutes(5); // Ustaw czas trwania quizu
+            timeRemaining = TimeSpan.FromMinutes(2); // Ustaw czas trwania quizu
             TimerLabel.Content = "Czas: " + timeRemaining.ToString(@"mm\:ss");
         }
         public void Timer_Tick(object sender, EventArgs e)
@@ -52,7 +53,11 @@ namespace MVVM
             if (timeRemaining <= TimeSpan.Zero)
             {
                 timer.Stop();
-                MessageBox.Show("Gra zakończona!", "Koniec gry", MessageBoxButton.OK, MessageBoxImage.Information);
+                SubmitButtonOpenQuiz.IsEnabled = false;
+                Close();
+                _viewmodel.Zakoncz_metod();
+                
+                
             }
         }
 

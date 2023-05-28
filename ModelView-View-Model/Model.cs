@@ -9,7 +9,7 @@ namespace MVVM
 {
     public class Model
     {
-        //zmienne
+        
        
         public string Find { get; }
         public string Question { get; set; }
@@ -65,11 +65,7 @@ namespace MVVM
             List<string> result = ReadData(connection, FileNameWithourExtension);
             connection.Close();
             return result;
-            //catch(Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //    return new List<string>();
-            //}
+            
 
 
         }

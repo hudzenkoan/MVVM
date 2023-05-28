@@ -89,13 +89,13 @@ namespace MVVM
 
                     
 
-                    // Удаляем существующий файл, если он существует
+                    
                     if (File.Exists(selectedFilePath))
                     {
                         File.Delete(selectedFilePath);
                     }
 
-                    // Создаем новый файл базы данных
+                    
                     Model.CreateDataBase(pytania, SelectedFileName, count, selectedFilePath);
 
                     MessageBox.Show("Quiz został utworzony!", "Powiodło się!", MessageBoxButton.OK, MessageBoxImage.Information);

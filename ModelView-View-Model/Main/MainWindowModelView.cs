@@ -71,12 +71,12 @@ namespace MVVM
 
             try
             {
-                // Получение списка файлов, соответствующих заданному тексту
+                
                 string[] files = Directory.GetFiles(directoryPath, "*.db")
                                            .Where(file => Path.GetFileName(file).ToLower().Contains(SearchText.ToLower()))
                                            .ToArray();
 
-                // Добавление найденных файлов в ListBox
+                
                 foreach (string file in files)
                 {
                     string fileName = Path.GetFileNameWithoutExtension(file);
@@ -86,7 +86,7 @@ namespace MVVM
             }
             catch (Exception ex)
             {
-                // Обработка исключений, если не удалось получить список файлов
+                
                 System.Windows.Forms.MessageBox.Show($"Error: {ex.Message}");
             }
         }
@@ -95,7 +95,7 @@ namespace MVVM
         public void NewQuiz()
         {
 
-            //var window = new NewQuiz();
+            
 
             enterNameWindow = new EnterName();
             enterNameWindow.ShowDialog();
@@ -112,7 +112,7 @@ namespace MVVM
 
 
 
-            //OpenQuiz window = new OpenQuiz();
+            
 
 
 
@@ -121,7 +121,7 @@ namespace MVVM
 
 
 
-            //window.ShowDialog();
+           
 
 
 
@@ -129,10 +129,10 @@ namespace MVVM
         {
             foreach (string rowData in data)
             {
-                // Podział danych w łańcuchu znaków na poszczególne elementy
+                
                 string[] rowDataParts = rowData.Split('|');
 
-                // Tworzenie sformatowanego łańcucha znaków w oczekiwanym formacie
+                
                 string formattedData = string.Format("Question: {0}| FirstAnswer: {1}| SecondAnswer: {2}| ThirdAnswer: {3}| FourthAnswer: {4}| CorrectlyAnswer: {5}",
                     rowDataParts[0].Trim(),
                     rowDataParts[1].Trim(),
@@ -141,12 +141,11 @@ namespace MVVM
                     rowDataParts[4].Trim(),
                     rowDataParts[5].Trim());
 
-                //EditQuestions window = new EditQuestions();
+                
                 window.ListBox_EditQuestions.Items.Add(formattedData);
 
 
-                // Dodawanie sformatowanego łańcucha znaków do ListBox
-                //listBox.Items.Add(formattedData);
+                
             }
         }
 
@@ -172,7 +171,7 @@ namespace MVVM
                 string selectedFileName = Path.GetFileNameWithoutExtension(selectedFilePath) + ".db";
 
                 string folderpath = Path.GetDirectoryName(selectedFilePath);
-                // Читаем данные и сохраняем их в QuizData
+                
                 
 
                 List<string> data = Model.ReadData(folderpath, selectedFileName);
@@ -183,10 +182,7 @@ namespace MVVM
 
 
                 
-                //string DaneDoListBox = string.Join($", ", Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer);
-                //string formattedString = string.Format("Question: {0}, FirstAnswer: {1}, SecondAnswer: {2}, ThirdAnswer: {3}, FourthAnswer: {4}, CorrectlyAnswer: {5}", Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer);
-
-                // Считывание данных из базы данных
+                
             }
 
 
@@ -217,12 +213,7 @@ namespace MVVM
         }
 
 
-        //public string Question { get; set; }
-        //public string FirstAnswer{ get; set; }
-        //public string SecondAnswer { get; set; }
-        //public string ThirdAnswer{ get; set; }
-        //public string FourthAnswer { get; set; }
-        //public string Name_Quiz { get; set; }
+        
 
 
     }

@@ -124,13 +124,13 @@ namespace MVVM
 
                     
 
-                    // Удаляем существующий файл, если он существует
+                    
                     if (File.Exists(selectedFilePath))
                     {
                         File.Delete(selectedFilePath);
                     }
 
-                    // Создаем новый файл базы данных
+                    
                     Model.CreateDataBase(pytania, SelectedFileName, count, selectedFilePath);
 
                     MessageBox.Show("Quiz został utworzony!", "Powiodło się!", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -140,40 +140,11 @@ namespace MVVM
                 {
                     MessageBox.Show("Dla zapisania musi być przynajmniej jeden element!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                //int count = _newQuiz.ListBoxNewQuiz.Items.Count;
-
-                //List<string> pytania = new List<string>();
-
-
-                //if (count != 0)
-                //{
-                //    for(int i = 0; i < count; i++)
-                //    {
-                //        string formatteddata = _newQuiz.ListBoxNewQuiz.Items[i].ToString();
-                //        string cleanedText = formatteddata.Replace("Question: ", "")
-                //            .Replace("FirstAnswer: ", "")
-                //            .Replace("SecondAnswer: ", "")
-                //            .Replace("ThirdAnswer: ", "")
-                //            .Replace("FourthAnswer: ", "")
-                //            .Replace("CorrectlyAnswer: ", "");
-
-
-                //        pytania.Add(cleanedText);
-                //    }
-                //    String Name = _newQuiz.NameTextBoxNewQuiz.Text;
-                //    //Model.CreateDataBase(pytania, Name, count); ИСПРАВИТЬ!!!!!!!!!!!!!
-                //    MessageBox.Show("Quiz został utworzony!", "Powiodło się!", MessageBoxButton.OK, MessageBoxImage.Information);
-                //    _newQuiz.Close();
-                //}
-                //else
-                //{
-                //    MessageBox.Show("Dla zapisania musi być przynajmniej jeden element!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-                //}
-                // Выводит ошибку, что нет элементов 
+                
 
 
             }
-                //Model.CreateDataBase(Name, Question, FirstAnswer, SecondAnswer, ThirdAnswer, FourthAnswer, CorrectlyAnswer);
+               
         }
 
         private bool IsAnyTextBoxEmpty()
@@ -238,8 +209,7 @@ namespace MVVM
             {
                 MessageBox.Show("Nie ma elementów dla usuwania", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            // else
-            // Показывает ошибку, что нет элементов в списке для удаления
+          
         }
 
         

@@ -25,8 +25,8 @@ namespace MVVM
         private string CorrectlyAnswer { get; set; }
         private int count { get; set; }
         private List<string> QuizData { get; set; }
-        private int IloscPrawidlowychOdpowiedzi;
-        private int IloscPytan;
+        private static int IloscPrawidlowychOdpowiedzi;
+        private static int IloscPytan;
 
 
         public OpenQuizViewModel()
@@ -56,6 +56,8 @@ namespace MVVM
             IloscPytan = QuizData.Count;
 
             _openQuiz.ShowDialog();
+
+            
         }
 
         private void OpenWindow()
@@ -75,18 +77,18 @@ namespace MVVM
                 SelectedFileName = Path.GetFileNameWithoutExtension(SelectedFilePath) + ".db";
 
                 folderpath = Path.GetDirectoryName(SelectedFilePath);
-                // Читаем данные и сохраняем их в QuizData
+                
                 QuizData = Model.ReadData(folderpath, SelectedFileName);
 
-                // Открываем диалоговое окно с передачей QuizData в конструктор
+                
                 OpenQuiz window = new OpenQuiz();
                 _openQuiz = window;
                 _openQuiz.QuizData = QuizData;
 
-                // Создаем экземпляр OpenQuizViewModel и передаем ссылку на окно OpenQuiz
+                
                 _openQuiz.DataContext = this;
 
-                // Подписываемся на события окна OpenQuiz
+                
                 _openQuiz.SubmitAnswer += SubmitAnswerHandler;
                 
                 _openQuiz.Rozpocznij_Click += _openQuiz_Rozpocznij_Click;
@@ -96,26 +98,42 @@ namespace MVVM
                 IloscPytan = QuizData.Count;
 
 
-                // Открываем диалоговое окно
+                
                 _openQuiz.ShowDialog();
+
+                
             }
         }
 
         private void _openQuiz_Zakoncz_Click()
         {
-            _openQuiz.timer.Stop();
+            
+
+
+           if(_openQuiz!= null)
+            {
+                _openQuiz.timer.Stop();
+                _openQuiz.Close();
+            }
+            
+            
 
             _resultsWindow = new ResultsWindow(this);
-            //_resultsWindow.DataContext = this;
+            
 
             string Wynik = $"Wynik: {IloscPrawidlowychOdpowiedzi}/{IloscPytan}";
 
             _resultsWindow.Wynik = Wynik;
             _resultsWindow.ShowDialog();
 
-            // Закрыть текущее окно игры
-            _openQuiz.Close();
 
+            
+
+        }
+
+        public void Zakoncz_metod()
+        {
+            _openQuiz_Zakoncz_Click();
         }
 
 
@@ -138,17 +156,12 @@ namespace MVVM
             }
         }
 
-        //private void ShowResultsWindow()
-        //{
-        //    ResultsWindow resultsWindow = new ResultsWindow(this);
-
-        //    resultsWindow.ShowDialog();
-        //}
+        
 
         private void MoveToNextQuestion()
         {
             List<string> Data = _openQuiz.QuizData;
-            // Проверяем, что есть еще вопросы в QuizData
+            
             if (count < Data.Count)
             {
                 string rowData = QuizData[count];
@@ -161,7 +174,7 @@ namespace MVVM
                 FourthAnswer = rowDataParts[4].Trim();
                 CorrectlyAnswer = rowDataParts[5].Trim();
 
-                // Обновляем данные в окне
+                
                 _openQuiz.Question = Question;
                 _openQuiz.FirstAnswer = FirstAnswer;
                 _openQuiz.SecondAnswer = SecondAnswer;
@@ -215,21 +228,17 @@ namespace MVVM
 
             }
             
-            // Проверяем ответ и выполняем соответствующие действия
+            
             if (selectedAnswer == CorrectlyAnswer)
             {
-                // Правильный ответ
-                //MessageBox.Show("Odpowiedź prawidłowa!");
+                
                 IloscPrawidlowychOdpowiedzi++;
-                // Переходим к следующему вопросу
+                
                 MoveToNextQuestion();
             }
             else
             {
-                // Неправильный ответ
-                //MessageBox.Show("Odpowiedź nieprawidłowa!");
-
-                // Переходим к следующему вопросу
+                
                 MoveToNextQuestion();
             }
 

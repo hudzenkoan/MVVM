@@ -53,8 +53,7 @@ namespace MVVM
                 string selectedFolder = folderdialog.SelectedPath;
                 Path = selectedFolder;
                 _settings.PathSettings = selectedFolder;
-                // Приписание переменной значения 
-                //Properties.Settings.Default.Path = selectedFolder;
+                
             }
         }
     }
