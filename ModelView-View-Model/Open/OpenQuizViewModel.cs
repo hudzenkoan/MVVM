@@ -27,11 +27,12 @@ namespace MVVM
         private List<string> QuizData { get; set; }
         private static int IloscPrawidlowychOdpowiedzi;
         private static int IloscPytan;
+        private static List<string> OdpowiedziUzytkownika;
 
 
         public OpenQuizViewModel()
         {
-
+            
         }
         public void Open()
         {
@@ -123,12 +124,53 @@ namespace MVVM
 
             string Wynik = $"Wynik: {IloscPrawidlowychOdpowiedzi}/{IloscPytan}";
 
-            _resultsWindow.Wynik = Wynik;
-            _resultsWindow.ShowDialog();
 
 
             
 
+            _resultsWindow.Wynik = Wynik;
+            _resultsWindow.ZapiszWyniki += _resultsWindow_ZapiszWyniki;
+            _resultsWindow.NieZapisujWynikow += _resultsWindow_NieZapisujWynikow;
+
+            _resultsWindow.ShowDialog();
+
+            
+
+
+
+        }
+
+        private void _resultsWindow_NieZapisujWynikow()
+        {
+            _resultsWindow.Close();
+        }
+
+        private void _resultsWindow_ZapiszWyniki()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Notepad (*.txt)|*.txt|All Files (*.*)|*.*";
+            saveFileDialog.InitialDirectory = @"C:\";
+            saveFileDialog.Title = "Save File";
+
+            bool? result = saveFileDialog.ShowDialog();
+
+            if(result == true)
+            {
+                string selectedFilePath = saveFileDialog.FileName;
+                
+
+                TextWriter txt = new StreamWriter(selectedFilePath);
+
+                foreach(string files in OdpowiedziUzytkownika)
+                {
+                    txt.Write(files+"\n");
+                    
+                }
+                txt.Close();
+                MessageBox.Show("Plik został stworzony", "Powiodło się", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+            
         }
 
         public void Zakoncz_metod()
@@ -215,10 +257,15 @@ namespace MVVM
 
         public void SubmitAnswerHandler()
         {
+            if(OdpowiedziUzytkownika == null)
+            {
+                OdpowiedziUzytkownika = new List<string>();
+            }
 
-
+            string Question = _openQuiz.Question;
             string selectedAnswer = _openQuiz.Answer;
 
+            OdpowiedziUzytkownika.Add($"Question: {Question}, Twoja Odpowiedź: {selectedAnswer}, Poprawna Odpowiedź: {CorrectlyAnswer} ");
 
 
             if (!IsAnyRadioButtonChecked())

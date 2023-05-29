@@ -4,7 +4,10 @@
         Title="Results" Height="287" Width="492" ResizeMode="NoResize">
     <Grid Margin="0,0,4,5">
         <Label Content="Game Over!" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" Margin="169,74,0,0"/>
-        <Label x:Name="WynikLabelResultsWindow" Content="Label" HorizontalAlignment="Left" Margin="214,115,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="WynikLabelResultsWindow" Content="Label" HorizontalAlignment="Left" Margin="209,109,0,0" VerticalAlignment="Top"/>
+        <Label Content="Czy zapisać twoje odpowiedzi do pliku?" HorizontalAlignment="Left" Margin="120,157,0,0" VerticalAlignment="Top"/>
+        <Button Content="Tak" HorizontalAlignment="Left" Margin="134,192,0,0" VerticalAlignment="Top" Width="64" Click="Button_Click"/>
+        <Button Content="Nie" HorizontalAlignment="Left" Margin="258,192,0,0" VerticalAlignment="Top" Width="64" Click="Button_Click_1"/>
 
     </Grid>
 </Window>

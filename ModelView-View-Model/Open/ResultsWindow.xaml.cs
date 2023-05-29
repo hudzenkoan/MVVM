@@ -24,9 +24,20 @@ namespace MVVM
             InitializeComponent();
             _viewmodel = viewModel;
         }
+        public event Action ZapiszWyniki;
+        public event Action NieZapisujWynikow;
+
         public string Wynik { get => WynikLabelResultsWindow.Content.ToString(); 
             set => WynikLabelResultsWindow.Content = value; }
-        
-        
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ZapiszWyniki?.Invoke();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            NieZapisujWynikow?.Invoke();
+        }
     }
 }
